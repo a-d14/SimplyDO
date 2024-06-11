@@ -1,0 +1,24 @@
+{
+  "name": "simplydo",
+  "version": "1.0.0",
+  "description": "SimplyDO is a to-do list app with a minimal interface that allows the user to focus on their tasks at hand.",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-d14/SimplyDO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a-d14/SimplyDO/issues"
+  },
+  "homepage": "https://github.com/a-d14/SimplyDO#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
