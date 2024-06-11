@@ -10,7 +10,12 @@ class ItemView extends View {
         if(isEditing) {
             return `<input type="text" value=${this._data.content} data-id=${this._data.id} />`;
         } else {
-            return `<li data-id=${this._data.id}>${this._data.content}</li>`;
+            return `
+                <div>
+                    <li data-id=${this._data.id}>${this._data.content}</li>
+                    <button type="button" class="delete-button">Delete</button>
+                </div>
+            `;
         }
     }
 }

@@ -1,4 +1,4 @@
-export const data = {
+export const state = {
     items: {
         "monday": {
             items: [
@@ -7,7 +7,7 @@ export const data = {
                 { id: 3, content: "Attend team meeting", completed: false },
                 { id: 4, content: "Go for a run", completed: false },
             ],
-            length: 2
+            length: 4
         },
         "tuesday": {
             items: [
@@ -53,6 +53,12 @@ export const data = {
     selectedDay: "monday"
 };
 
+export const addItem = function(data, day = state.selectedDay) {
+    const itemsOfDay = state.items[day];
+    itemsOfDay.items.push({id: itemsOfDay.length + 1, content: data.itemEntry, completed: false});
+    itemsOfDay.length++;
+}
+
 export const setSelectedDay = function(day) {
-    data.selectedDay = day;
+    state.selectedDay = day;
 }

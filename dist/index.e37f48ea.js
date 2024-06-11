@@ -590,14 +590,23 @@ var _listViewJs = require("./views/ListView.js");
 var _listViewJsDefault = parcelHelpers.interopDefault(_listViewJs);
 var _daySelectorViewJs = require("./views/daySelectorView.js");
 var _daySelectorViewJsDefault = parcelHelpers.interopDefault(_daySelectorViewJs);
+var _addItemViewJs = require("./views/addItemView.js");
+var _addItemViewJsDefault = parcelHelpers.interopDefault(_addItemViewJs);
 // DISPLAY ITEMS
-const controlItemDisplay = function(day = _modelJs.data.selectedDay) {
-    (0, _listViewJsDefault.default).render(_modelJs.data.items[day].items);
+const controlItemDisplay = function(day = _modelJs.state.selectedDay) {
+    (0, _listViewJsDefault.default).render(_modelJs.state.items[day].items);
 };
 // ADD ITEM TO LIST
-const addItemController = function() {};
+const addItemController = function(formData) {
+    const dataObject = Object.fromEntries(formData.entries());
+    // console.log(dataObject);
+    _modelJs.addItem(dataObject);
+    controlItemDisplay();
+};
 // UPDATE ITEM
-const updateItemController = function() {};
+const updateItemController = function() {
+// ADD CLICK LISTENER ON THE LIST
+};
 // REMOVE ITEM FROM LIST
 const removeItemController = function() {};
 // SWITCH BETWEEN DAYS
@@ -608,15 +617,17 @@ const switchDayController = function(day) {
 function init() {
     controlItemDisplay();
     (0, _daySelectorViewJsDefault.default).addHandlerDayChange(switchDayController);
+    (0, _addItemViewJsDefault.default).addHandlerOnSubmit(addItemController);
 }
 init();
 
-},{"./model.js":"Y4A21","./views/ListView.js":"bzxVY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/daySelectorView.js":"11qa1"}],"Y4A21":[function(require,module,exports) {
+},{"./model.js":"Y4A21","./views/ListView.js":"bzxVY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/daySelectorView.js":"11qa1","./views/addItemView.js":"eNQZt"}],"Y4A21":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "data", ()=>data);
+parcelHelpers.export(exports, "state", ()=>state);
+parcelHelpers.export(exports, "addItem", ()=>addItem);
 parcelHelpers.export(exports, "setSelectedDay", ()=>setSelectedDay);
-const data = {
+const state = {
     items: {
         "monday": {
             items: [
@@ -641,7 +652,7 @@ const data = {
                     completed: false
                 }
             ],
-            length: 2
+            length: 4
         },
         "tuesday": {
             items: [
@@ -726,8 +737,17 @@ const data = {
     },
     selectedDay: "monday"
 };
+const addItem = function(data, day = state.selectedDay) {
+    const itemsOfDay = state.items[day];
+    itemsOfDay.items.push({
+        id: itemsOfDay.length + 1,
+        content: data.itemEntry,
+        completed: false
+    });
+    itemsOfDay.length++;
+};
 const setSelectedDay = function(day) {
-    data.selectedDay = day;
+    state.selectedDay = day;
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
@@ -772,6 +792,7 @@ class ListView extends (0, _viewJsDefault.default) {
     constructor(){
         super();
     }
+    addHandlerDeleteItem(handler) {}
     _generateMarkup() {
         const markup = this._data.map((item)=>(0, _itemViewJsDefault.default).render(item, false)).join("");
         return markup;
@@ -808,7 +829,12 @@ class ItemView extends (0, _viewJsDefault.default) {
     }
     _generateMarkup(isEditing = false) {
         if (isEditing) return `<input type="text" value=${this._data.content} data-id=${this._data.id} />`;
-        else return `<li data-id=${this._data.id}>${this._data.content}</li>`;
+        else return `
+                <div>
+                    <li data-id=${this._data.id}>${this._data.content}</li>
+                    <button type="button" class="delete-button">Delete</button>
+                </div>
+            `;
     }
 }
 exports.default = new ItemView();
@@ -829,6 +855,22 @@ class DaySelectorView extends (0, _viewJsDefault.default) {
     }
 }
 exports.default = new DaySelectorView();
+
+},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eNQZt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+class AddItemView extends (0, _viewJsDefault.default) {
+    _parent = document.querySelector(".add-item");
+    addHandlerOnSubmit(handler) {
+        this._parent.addEventListener("submit", (e)=>{
+            e.preventDefault();
+            handler(new FormData(e.target));
+        });
+    }
+}
+exports.default = new AddItemView();
 
 },{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequire4688")
 
