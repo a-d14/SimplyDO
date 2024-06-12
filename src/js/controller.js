@@ -4,6 +4,7 @@ import listView from './views/ListView.js';
 import daySelectorView from './views/daySelectorView.js';
 import addItemView from './views/addItemView.js';
 
+
 // DISPLAY ITEMS
 const controlItemDisplay = function(day = model.state.selectedDay) {
     listView.render(model.state.items[day].items);
@@ -17,15 +18,22 @@ const addItemController = function(formData) {
     controlItemDisplay();
 }
 
+const showEditFieldController = function(id) {
+    console.log(id);
+    model.toggleEdit(id);
+    controlItemDisplay();
+}
+
 // UPDATE ITEM
-const updateItemController = function() {
-    // ADD CLICK LISTENER ON THE LIST
+const editItemController = function(id) {
     
+
 }
 
 // REMOVE ITEM FROM LIST
-const removeItemController = function() {
-
+const removeItemController = function(id) {
+    model.setItems(model.state.items[model.state.selectedDay].items.filter((item) => item.id != id));
+    controlItemDisplay();
 }
 
 // SWITCH BETWEEN DAYS
@@ -38,6 +46,7 @@ function init() {
     controlItemDisplay();
     daySelectorView.addHandlerDayChange(switchDayController);
     addItemView.addHandlerOnSubmit(addItemController);
+    listView.addHandlerEditAndDeleteItem(showEditFieldController, removeItemController);
 }
 
 init();

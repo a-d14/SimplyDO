@@ -8,8 +8,16 @@ class ListView extends View {
         super();
     }
 
-    addHandlerDeleteItem(handler) {
-        
+    addHandlerEditAndDeleteItem(handlerEdit, handlerDelete) {
+        this._parent.addEventListener('click', (e) => {
+            const targetElement = e.target.parentNode.getElementsByTagName('li')[0];
+            const targetId = targetElement.dataset.id;
+            if(e.target.className === 'delete-button') {
+                handlerDelete(targetId);
+            } else if(e.target.className === 'edit-button') {
+                handlerEdit(+targetId);
+            }
+        });
     }
 
     _generateMarkup() {
