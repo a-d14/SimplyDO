@@ -599,17 +599,15 @@ const controlItemDisplay = function(day = _modelJs.state.selectedDay) {
 // ADD ITEM TO LIST
 const addItemController = function(formData) {
     const dataObject = Object.fromEntries(formData.entries());
+    if (dataObject.itemEntry.trim() === "") return;
     // console.log(dataObject);
     _modelJs.addItem(dataObject);
     controlItemDisplay();
 };
-const showEditFieldController = function(id) {
-    console.log(id);
-    _modelJs.toggleEdit(id);
+const editItemController = function(id, content = null) {
+    _modelJs.toggleEdit(id, content);
     controlItemDisplay();
 };
-// UPDATE ITEM
-const editItemController = function(id) {};
 // REMOVE ITEM FROM LIST
 const removeItemController = function(id) {
     _modelJs.setItems(_modelJs.state.items[_modelJs.state.selectedDay].items.filter((item)=>item.id != id));
@@ -624,7 +622,7 @@ function init() {
     controlItemDisplay();
     (0, _daySelectorViewJsDefault.default).addHandlerDayChange(switchDayController);
     (0, _addItemViewJsDefault.default).addHandlerOnSubmit(addItemController);
-    (0, _listViewJsDefault.default).addHandlerEditAndDeleteItem(showEditFieldController, removeItemController);
+    (0, _listViewJsDefault.default).addHandlerEditAndDeleteItem(editItemController, removeItemController);
 }
 init();
 
@@ -762,7 +760,8 @@ const addItem = function(data, day = state.selectedDay) {
 const setSelectedDay = function(day) {
     state.selectedDay = day;
 };
-const toggleEdit = function(id) {
+const toggleEdit = function(id, content = null) {
+    if (content != null) state.items[state.selectedDay].items.find((item)=>item.id === id).content = content;
     state.items[state.selectedDay].items.find((item)=>item.id === id).edit = !state.items[state.selectedDay].items.find((item)=>item.id === id).edit;
 };
 
@@ -813,7 +812,10 @@ class ListView extends (0, _viewJsDefault.default) {
             const targetElement = e.target.parentNode.getElementsByTagName("li")[0];
             const targetId = targetElement.dataset.id;
             if (e.target.className === "delete-button") handlerDelete(targetId);
-            else if (e.target.className === "edit-button") handlerEdit(+targetId);
+            else if (e.target.className === "edit-button") {
+                const inputElement = targetElement.getElementsByTagName("input")[0];
+                handlerEdit(+targetId, inputElement ? inputElement.value : null);
+            }
         });
     }
     _generateMarkup() {
@@ -855,7 +857,7 @@ class ItemView extends (0, _viewJsDefault.default) {
             console.log(this._data.content);
             return `
                 <div class="list-item">
-                    <li data-id=${this._data.id}><input type="text" value=${this._data.content}/></li>
+                    <li data-id=${this._data.id}><input type="text" value="${this._data.content}"/></li>
                     <button type="button" class="delete-button">Delete</button>
                     <button type="button" class="edit-button">Submit</button>
                 </div>

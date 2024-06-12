@@ -13,21 +13,17 @@ const controlItemDisplay = function(day = model.state.selectedDay) {
 // ADD ITEM TO LIST
 const addItemController = function(formData) {
     const dataObject = Object.fromEntries(formData.entries());
+
+    if(dataObject.itemEntry.trim() === '') return;
+
     // console.log(dataObject);
     model.addItem(dataObject);
     controlItemDisplay();
 }
 
-const showEditFieldController = function(id) {
-    console.log(id);
-    model.toggleEdit(id);
+const editItemController = function(id, content = null) {
+    model.toggleEdit(id, content);
     controlItemDisplay();
-}
-
-// UPDATE ITEM
-const editItemController = function(id) {
-    
-
 }
 
 // REMOVE ITEM FROM LIST
@@ -46,7 +42,7 @@ function init() {
     controlItemDisplay();
     daySelectorView.addHandlerDayChange(switchDayController);
     addItemView.addHandlerOnSubmit(addItemController);
-    listView.addHandlerEditAndDeleteItem(showEditFieldController, removeItemController);
+    listView.addHandlerEditAndDeleteItem(editItemController, removeItemController);
 }
 
 init();

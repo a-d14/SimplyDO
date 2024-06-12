@@ -15,7 +15,8 @@ class ListView extends View {
             if(e.target.className === 'delete-button') {
                 handlerDelete(targetId);
             } else if(e.target.className === 'edit-button') {
-                handlerEdit(+targetId);
+                const inputElement = targetElement.getElementsByTagName('input')[0];
+                handlerEdit(+targetId, inputElement ? inputElement.value : null);
             }
         });
     }

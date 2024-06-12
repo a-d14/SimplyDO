@@ -68,7 +68,11 @@ export const setSelectedDay = function(day) {
     state.selectedDay = day;
 }
 
-export const toggleEdit = function(id) {
+export const toggleEdit = function(id, content= null) {
+
+    if(content != null)
+        state.items[state.selectedDay].items.find(item => item.id === id).content = content;
+
     state.items[state.selectedDay].items.find(item => item.id === id).edit = 
         !state.items[state.selectedDay].items.find(item => item.id === id).edit;
 }
