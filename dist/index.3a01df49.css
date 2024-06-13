@@ -1,6 +1,7 @@
 body {
   flex-direction: column;
   height: 100vh;
+  font-size: 66.5%;
   display: flex;
 }
 
@@ -18,26 +19,72 @@ main {
 .item-add-and-display {
   border: 1px solid red;
   flex: 0 0 60%;
+  position: relative;
 }
 
 .item-add-and-display .list-items {
+  border: 1px solid #00f;
+  width: 60%;
   margin: 0;
   padding: 0;
   list-style-type: none;
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .item-add-and-display .list-item {
   border: 1px solid red;
   border-radius: 3px;
+  justify-content: space-between;
+  align-items: center;
+  margin: .5rem;
+  padding: 2% 3%;
   display: flex;
 }
 
 .item-add-and-display .list-item li {
-  color: red;
+  width: 74%;
+  font-size: 1.2rem;
+}
+
+.item-add-and-display .list-item li input {
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.item-add-and-display .list-item__controls {
+  align-items: flex-end;
+}
+
+.item-add-and-display .add-item {
+  width: 60%;
+  position: absolute;
+  top: 3.5rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.item-add-and-display .add-item input {
+  width: 86.5%;
+  display: inline-block;
 }
 
 .select-day {
   border: 1px solid red;
   flex: 0 0 40%;
+  font-size: 1.6rem;
+  position: relative;
+}
+
+.select-day ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  position: absolute;
+  top: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
 /*# sourceMappingURL=index.3a01df49.css.map */

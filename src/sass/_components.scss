@@ -8,25 +8,56 @@
     flex: 0 0 60%; 
     border: 1px solid red;
     // padding: 1% 3%;
+    position: relative;
 
     .list-items {
         list-style-type: none;
         margin: 0;
         padding: 0;
+        position: absolute;
+        width: 60%;
+        top: 5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 1px solid blue;
     }
 
     .list-item {
         border: 1px solid red;
         border-radius: 3px;
         display: flex;
-        // width: 40%;
+        justify-content: space-between;
+        padding: 2% 3%;
+        align-items: center;
+        margin: .5rem .5rem;
     
         li {
-            color: red;
+            // color: red;
+            width: 74%;
+            font-size: 1.2rem;
+
+            input {
+                width: 100%;
+                font-size: 1.2rem;
+            }
         }
     
         &__controls {
-    
+            align-items: flex-end;
+        }
+    }
+
+    .add-item {
+        width: 60%;
+
+        position: absolute;
+        top: 3.5rem;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        
+        input {
+            display: inline-block;
+            width: 86.5%;
         }
     }
 }
@@ -35,4 +66,16 @@
 .select-day {
     flex: 0 0 40%;
     border: 1px solid red;
+    position: relative;
+    font-size: 1.6rem;
+
+    ul {
+        position: absolute;
+        top: 3.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
 }
