@@ -1,0 +1,38 @@
+// MAIN LIST
+
+
+// LIST ITEM
+
+.item-add-and-display {
+
+    flex: 0 0 60%; 
+    border: 1px solid red;
+    // padding: 1% 3%;
+
+    .list-items {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .list-item {
+        border: 1px solid red;
+        border-radius: 3px;
+        display: flex;
+        // width: 40%;
+    
+        li {
+            color: red;
+        }
+    
+        &__controls {
+    
+        }
+    }
+}
+
+// DAY SELECT
+.select-day {
+    flex: 0 0 40%;
+    border: 1px solid red;
+}

@@ -11,25 +11,25 @@
             <p class="header__subtext">Get things done.</p>
         </header>
         <main>
-            <div>
+            <div class="select-day">
+                <ul>
+                    <li>monday</li>
+                    <li>tuesday</li>
+                    <li>wednesday</li>
+                    <li>thursday</li>
+                    <li>friday</li>
+                    <li>saturday</li>
+                    <li>sunday</li>
+                </ul>
+            </div>
+            <div class="item-add-and-display">
                 <form class="add-item">
                     <input name="itemEntry" type="text" id="item-entry" />
                     <button type="submit" id="add-item">Submit</button>
                 </form>
-            </div>
-            <div>
                 <ul class="list-items" id="list-items">
                 </ul>
             </div>
-            <ul class="select-day">
-                <li>monday</li>
-                <li>tuesday</li>
-                <li>wednesday</li>
-                <li>thursday</li>
-                <li>friday</li>
-                <li>saturday</li>
-                <li>sunday</li>
-            </ul>
         </main>
         <script src="./src/js/controller.js" type="module"></script>
     </body>

@@ -809,7 +809,7 @@ class ListView extends (0, _viewJsDefault.default) {
     }
     addHandlerEditAndDeleteItem(handlerEdit, handlerDelete) {
         this._parent.addEventListener("click", (e)=>{
-            const targetElement = e.target.parentNode.getElementsByTagName("li")[0];
+            const targetElement = e.target.closest(".list-item").getElementsByTagName("li")[0];
             const targetId = targetElement.dataset.id;
             if (e.target.className === "delete-button") handlerDelete(targetId);
             else if (e.target.className === "edit-button") {
@@ -858,15 +858,19 @@ class ItemView extends (0, _viewJsDefault.default) {
             return `
                 <div class="list-item">
                     <li data-id=${this._data.id}><input type="text" value="${this._data.content}"/></li>
-                    <button type="button" class="delete-button">Delete</button>
-                    <button type="button" class="edit-button">Submit</button>
+                    <div class="list-item-controls">
+                        <button type="button" class="delete-button">Delete</button>
+                        <button type="button" class="edit-button">Submit</button>
+                    </div>
                 </div>
             `;
         } else return `
                 <div class="list-item">
                     <li data-id=${this._data.id}>${this._data.content}</li>
-                    <button type="button" class="delete-button">Delete</button>
-                    <button type="button" class="edit-button">Edit</button>
+                    <div class="list-item__controls">
+                        <button type="button" class="delete-button">Delete</button>
+                        <button type="button" class="edit-button">Edit</button>
+                    </div>
                 </div>
             `;
     }

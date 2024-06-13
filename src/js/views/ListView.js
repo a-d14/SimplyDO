@@ -10,7 +10,7 @@ class ListView extends View {
 
     addHandlerEditAndDeleteItem(handlerEdit, handlerDelete) {
         this._parent.addEventListener('click', (e) => {
-            const targetElement = e.target.parentNode.getElementsByTagName('li')[0];
+            const targetElement = e.target.closest('.list-item').getElementsByTagName('li')[0];
             const targetId = targetElement.dataset.id;
             if(e.target.className === 'delete-button') {
                 handlerDelete(targetId);

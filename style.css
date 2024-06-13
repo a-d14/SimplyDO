@@ -1,3 +1,40 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 
+header {
+  flex: 0 0 20%;
+}
+
+main {
+  display: flex;
+  border: 1px solid green;
+  justify-content: center;
+  flex: 0 0 80%;
+}
+
+.item-add-and-display {
+  flex: 0 0 60%;
+  border: 1px solid red;
+}
+.item-add-and-display .list-items {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.item-add-and-display .list-item {
+  border: 1px solid red;
+  border-radius: 3px;
+  display: flex;
+}
+.item-add-and-display .list-item li {
+  color: red;
+}
+.select-day {
+  flex: 0 0 40%;
+  border: 1px solid red;
+}
 
 /*# sourceMappingURL=style.css.map */

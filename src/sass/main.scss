@@ -1,21 +1,2 @@
-// body {
-//     background-color: white;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-// }
-
-// header {
-//     text-align: center;
-// }
-
-// footer {
-//     width: 60%;
-//     display: flex;
-//     justify-content: space-evenly;
-// }
-
-// // #add-item{
-// //     background-color: blue;
-// //     border: none;
-// // }
+@use 'base';
+@use 'components';

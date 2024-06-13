@@ -1,2 +1,43 @@
+body {
+  flex-direction: column;
+  height: 100vh;
+  display: flex;
+}
 
+header {
+  flex: 0 0 20%;
+}
+
+main {
+  border: 1px solid green;
+  flex: 0 0 80%;
+  justify-content: center;
+  display: flex;
+}
+
+.item-add-and-display {
+  border: 1px solid red;
+  flex: 0 0 60%;
+}
+
+.item-add-and-display .list-items {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.item-add-and-display .list-item {
+  border: 1px solid red;
+  border-radius: 3px;
+  display: flex;
+}
+
+.item-add-and-display .list-item li {
+  color: red;
+}
+
+.select-day {
+  border: 1px solid red;
+  flex: 0 0 40%;
+}
 /*# sourceMappingURL=index.3a01df49.css.map */
