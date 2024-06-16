@@ -809,10 +809,13 @@ class ListView extends (0, _viewJsDefault.default) {
     }
     addHandlerEditAndDeleteItem(handlerEdit, handlerDelete) {
         this._parent.addEventListener("click", (e)=>{
+            console.log("onclick");
             const targetElement = e.target.closest(".list-item").getElementsByTagName("li")[0];
             const targetId = targetElement.dataset.id;
-            if (e.target.className === "delete-button") handlerDelete(targetId);
-            else if (e.target.className === "edit-button") {
+            console.log(targetId);
+            console.log(e.target);
+            if (e.target.closest("button").className === "list-item__controls--delete") handlerDelete(targetId);
+            else if (e.target.closest("button").className === "list-item__controls--edit" || e.target.closest("button").className === "list-item__controls--submit") {
                 const inputElement = targetElement.getElementsByTagName("input")[0];
                 handlerEdit(+targetId, inputElement ? inputElement.value : null);
             }
@@ -848,6 +851,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+var _iconsSvg = require("url:../../assets/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class ItemView extends (0, _viewJsDefault.default) {
     constructor(){
         super();
@@ -858,9 +863,17 @@ class ItemView extends (0, _viewJsDefault.default) {
             return `
                 <div class="list-item">
                     <li data-id=${this._data.id}><input type="text" value="${this._data.content}"/></li>
-                    <div class="list-item-controls">
-                        <button type="button" class="delete-button">Delete</button>
-                        <button type="button" class="edit-button">Submit</button>
+                    <div class="list-item__controls">
+                        <button type="button" class="list-item__controls--delete">
+                            <svg class="delete">
+                                <use href="${0, _iconsSvgDefault.default}#icon-bin"></use>
+                            </svg>
+                        </button>
+                        <button type="button" class="list-item__controls--submit">
+                            <svg class="submit">
+                                <use href="${0, _iconsSvgDefault.default}#icon-plus"></use>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             `;
@@ -868,8 +881,21 @@ class ItemView extends (0, _viewJsDefault.default) {
                 <div class="list-item">
                     <li data-id=${this._data.id}>${this._data.content}</li>
                     <div class="list-item__controls">
-                        <button type="button" class="delete-button">Delete</button>
-                        <button type="button" class="edit-button">Edit</button>
+                        <button type="button" class="list-item__controls--complete">
+                            <svg class="check">
+                                <use href="${0, _iconsSvgDefault.default}#icon-checkmark2"></use>
+                            </svg>
+                        </button>
+                        <button type="button" class="list-item__controls--edit">
+                            <svg class="edit">
+                                <use href="${0, _iconsSvgDefault.default}#icon-pencil"></use>
+                            </svg>
+                        </button>
+                        <button type="button" class="list-item__controls--delete">
+                            <svg class="delete">
+                                <use href="${0, _iconsSvgDefault.default}#icon-bin"></use>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             `;
@@ -877,7 +903,45 @@ class ItemView extends (0, _viewJsDefault.default) {
 }
 exports.default = new ItemView();
 
-},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"11qa1":[function(require,module,exports) {
+},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../assets/icons.svg":"knPe0"}],"knPe0":[function(require,module,exports) {
+module.exports = require("8fd43c75e9dfae70").getBundleURL("hWUTQ") + "icons.4112406e.svg" + "?" + Date.now();
+
+},{"8fd43c75e9dfae70":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+}
+// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"11qa1":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");

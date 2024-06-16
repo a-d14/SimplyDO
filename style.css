@@ -52,16 +52,41 @@ main {
 .item-add-and-display .list-item__controls {
   align-items: flex-end;
 }
+.item-add-and-display .list-item__controls button {
+  border: none;
+  background-color: white;
+}
+.item-add-and-display .list-item__controls button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  transition: all 0.2s;
+}
+.item-add-and-display .list-item__controls button svg:hover {
+  cursor: pointer;
+}
+.item-add-and-display .list-item__controls button .check:hover {
+  fill: green;
+}
+.item-add-and-display .list-item__controls button .edit:hover {
+  fill: yellow;
+}
+.item-add-and-display .list-item__controls button .delete:hover {
+  fill: red;
+}
+.item-add-and-display .list-item__controls button .submit:hover {
+  fill: green;
+}
 .item-add-and-display .add-item {
   width: 60%;
   position: absolute;
   top: 3.5rem;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
 }
 .item-add-and-display .add-item input {
   display: inline-block;
-  width: 86.5%;
+  width: 88%;
 }
 
 .select-day {
@@ -70,14 +95,17 @@ main {
   position: relative;
   font-size: 1.6rem;
 }
-.select-day ul {
+.select-day__items {
   position: absolute;
-  top: 3.5rem;
+  top: 5rem;
   left: 50%;
   transform: translateX(-50%);
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+.select-day__item {
+  padding: 10% 3%;
 }
 
 /*# sourceMappingURL=style.css.map */

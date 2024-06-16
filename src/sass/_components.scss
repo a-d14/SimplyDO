@@ -44,6 +44,42 @@
     
         &__controls {
             align-items: flex-end;
+
+            button {
+                border: none;
+                background-color: white;
+                // border-radius: 50%;
+
+                svg {
+                    width: 1.2rem;
+                    height: 1.2rem;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+
+                    transition: all .2s;
+                    
+                }
+
+                .check:hover{
+                    fill: green;
+                }
+
+                .edit:hover {
+                    fill: yellow;
+                }
+
+                .delete:hover {
+                    fill:red;
+                }
+
+                .submit:hover {
+                    fill: green;
+                }
+            }
+
+            
         }
     }
 
@@ -54,10 +90,12 @@
         top: 3.5rem;
         left: 50%;
         transform: translate(-50%, -50%);
+        // border: 1px solid black;
+        text-align: center;
         
         input {
             display: inline-block;
-            width: 86.5%;
+            width: 88%;
         }
     }
 }
@@ -69,13 +107,18 @@
     position: relative;
     font-size: 1.6rem;
 
-    ul {
+    &__items {
         position: absolute;
-        top: 3.5rem;
+        top: 5rem;
         left: 50%;
         transform: translateX(-50%);
         list-style-type: none;
         margin: 0;
         padding: 0;
     }
+
+    &__item {
+        padding: 10% 3%;
+    }
+
 }

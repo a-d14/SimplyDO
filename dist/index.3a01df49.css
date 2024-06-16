@@ -58,7 +58,39 @@ main {
   align-items: flex-end;
 }
 
+.item-add-and-display .list-item__controls button {
+  background-color: #fff;
+  border: none;
+}
+
+.item-add-and-display .list-item__controls button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  transition: all .2s;
+}
+
+.item-add-and-display .list-item__controls button svg:hover {
+  cursor: pointer;
+}
+
+.item-add-and-display .list-item__controls button .check:hover {
+  fill: green;
+}
+
+.item-add-and-display .list-item__controls button .edit:hover {
+  fill: #ff0;
+}
+
+.item-add-and-display .list-item__controls button .delete:hover {
+  fill: red;
+}
+
+.item-add-and-display .list-item__controls button .submit:hover {
+  fill: green;
+}
+
 .item-add-and-display .add-item {
+  text-align: center;
   width: 60%;
   position: absolute;
   top: 3.5rem;
@@ -67,7 +99,7 @@ main {
 }
 
 .item-add-and-display .add-item input {
-  width: 86.5%;
+  width: 88%;
   display: inline-block;
 }
 
@@ -78,13 +110,17 @@ main {
   position: relative;
 }
 
-.select-day ul {
+.select-day__items {
   margin: 0;
   padding: 0;
   list-style-type: none;
   position: absolute;
-  top: 3.5rem;
+  top: 5rem;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.select-day__item {
+  padding: 10% 3%;
 }
 /*# sourceMappingURL=index.3a01df49.css.map */
