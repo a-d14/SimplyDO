@@ -6,9 +6,11 @@
         <link rel="stylesheet" href="/index.3a01df49.css">
     </head>
     <body>
-        <header>
-            <h1 class="header__main">SimplyDO</h1>
-            <p class="header__subtext">Get things done.</p>
+        <header class="header">
+            <div class="header__content">
+                <h1 class="header__content--main">SimplyDO</h1>
+                <p class="header__content--subtext">Get things done.</p>
+            </div>
         </header>
         <main>
             <div class="select-day">
@@ -23,8 +25,8 @@
                 </ul>
             </div>
             <div class="item-add-and-display">
-                <form class="add-item">
-                    <input name="itemEntry" type="text" id="item-entry">
+                <form autocomplete="off" class="add-item">
+                    <input placeholder="Enter a task here..." name="itemEntry" type="text" id="item-entry">
                     <button type="submit" id="add-item">
                         <svg class="check">
                             <use href="/icons.6abcb0e8.svg#icon-plus"></use>

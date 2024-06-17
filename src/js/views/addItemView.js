@@ -7,7 +7,16 @@ class AddItemView extends View {
     addHandlerOnSubmit(handler) {
         this._parent.addEventListener('submit', (e) => {
             e.preventDefault();
-            handler(new FormData(e.target));
+
+            console.log(e.target.firstElementChild);
+
+            const formData = new FormData(e.target);
+
+            const dataObject = Object.fromEntries(formData.entries());
+
+            handler(dataObject);
+
+            e.target.firstElementChild.value = "";
         });
     }
 

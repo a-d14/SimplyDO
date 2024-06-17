@@ -11,9 +11,23 @@ body {
   background-color: #E9ECEF;
 }
 
-header {
+.header {
   flex: 0 0 20%;
   width: 100%;
+  position: relative;
+}
+.header__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.header__content--main {
+  font-size: 3rem;
+  margin: 0;
+}
+.header__content--subtext {
+  font-size: 1rem;
 }
 
 main {
@@ -146,7 +160,7 @@ main button .submit:hover {
 }
 .item-add-and-display .add-item button {
   margin-left: -1.3rem;
-  margin-right: 0.1rem;
+  margin-right: 0.25rem;
   border-radius: 60%;
   height: 2rem;
   background-color: #495057;

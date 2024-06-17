@@ -601,8 +601,7 @@ const controlSideNavDisplay = function(day = _modelJs.state.selectedDay) {
     (0, _daySelectorViewJsDefault.default).render(_modelJs.state.selectedDay);
 };
 // ADD ITEM TO LIST
-const addItemController = function(formData) {
-    const dataObject = Object.fromEntries(formData.entries());
+const addItemController = function(dataObject) {
     if (dataObject.itemEntry.trim() === "") return;
     // console.log(dataObject);
     _modelJs.addItem(dataObject);
@@ -988,7 +987,11 @@ class AddItemView extends (0, _viewJsDefault.default) {
     addHandlerOnSubmit(handler) {
         this._parent.addEventListener("submit", (e)=>{
             e.preventDefault();
-            handler(new FormData(e.target));
+            console.log(e.target.firstElementChild);
+            const formData = new FormData(e.target);
+            const dataObject = Object.fromEntries(formData.entries());
+            handler(dataObject);
+            e.target.firstElementChild.value = "";
         });
     }
 }

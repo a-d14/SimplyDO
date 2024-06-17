@@ -16,8 +16,7 @@ const controlSideNavDisplay = function(day = model.state.selectedDay) {
 }
 
 // ADD ITEM TO LIST
-const addItemController = function(formData) {
-    const dataObject = Object.fromEntries(formData.entries());
+const addItemController = function(dataObject) {
 
     if(dataObject.itemEntry.trim() === '') return;
 
