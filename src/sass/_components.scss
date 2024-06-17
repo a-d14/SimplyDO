@@ -39,8 +39,7 @@
 
 .item-add-and-display {
 
-    flex: 0 0 80%; 
-    // padding: 1% 3%;
+    flex: 0 0 80%;
     position: relative;
 
     .list-items {
@@ -54,7 +53,6 @@
         transform: translateX(-50%);
         border-radius: 15px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
     }
 
     .list-item {
@@ -71,7 +69,6 @@
         color: #6C757D;
     
         li {
-            // color: red;
             width: 74%;
             font-size: 1.2rem;
 
@@ -85,46 +82,54 @@
             align-items: flex-end;
 
             button {
-                border: none;
-                background-color: white;
-                // border-radius: 50%;
-
-                .check:hover{
-                    fill: green;
-                }
-
-                .edit:hover {
-                    fill: yellow;
-                }
-
-                .delete:hover {
-                    fill:red;
-                }
-
-                .submit:hover {
-                    fill: green;
-                }
+                background-color: #DEE2E6;
             }
 
-            
         }
     }
 
     .add-item {
-        width: 90%;
+        width: 70%;
 
         position: absolute;
         top: 3rem;
         left: 50%;
         transform: translate(-50%, -50%);
-        // border: 1px solid black;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: #ADB5BD;
+        align-items: center;
         
         input {
             display: inline-block;
-            width: 70%;
+            width: 100%;
             border: none;
             outline: none;
+            height: 2.2rem;
+            font-size: 1rem;
+            overflow: hidden;
+            background-color: #ADB5BD;
+            margin-left: 1rem;
+        }
+
+        button {
+            margin-left: -1.3rem;
+            margin-right: .1rem;
+            border-radius: 60%;
+            height: 2rem;
+            background-color: #495057;
+        }
+
+        svg {
+            background-color: #495057;
+            fill: #6C757D;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }

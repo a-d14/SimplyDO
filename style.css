@@ -30,7 +30,24 @@ main svg {
   height: 1.2rem;
   transition: all 0.2s;
 }
-main svg:hover {
+main button {
+  border: none;
+  background-color: white;
+}
+main button .check:hover {
+  fill: green;
+  cursor: pointer;
+}
+main button .edit:hover {
+  fill: yellow;
+  cursor: pointer;
+}
+main button .delete:hover {
+  fill: red;
+  cursor: pointer;
+}
+main button .submit:hover {
+  fill: green;
   cursor: pointer;
 }
 
@@ -100,34 +117,46 @@ main svg:hover {
   align-items: flex-end;
 }
 .item-add-and-display .list-item__controls button {
-  border: none;
-  background-color: white;
-}
-.item-add-and-display .list-item__controls button .check:hover {
-  fill: green;
-}
-.item-add-and-display .list-item__controls button .edit:hover {
-  fill: yellow;
-}
-.item-add-and-display .list-item__controls button .delete:hover {
-  fill: red;
-}
-.item-add-and-display .list-item__controls button .submit:hover {
-  fill: green;
+  background-color: #DEE2E6;
 }
 .item-add-and-display .add-item {
-  width: 90%;
+  width: 70%;
   position: absolute;
   top: 3rem;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #ADB5BD;
+  align-items: center;
 }
 .item-add-and-display .add-item input {
   display: inline-block;
-  width: 70%;
+  width: 100%;
   border: none;
   outline: none;
+  height: 2.2rem;
+  font-size: 1rem;
+  overflow: hidden;
+  background-color: #ADB5BD;
+  margin-left: 1rem;
+}
+.item-add-and-display .add-item button {
+  margin-left: -1.3rem;
+  margin-right: 0.1rem;
+  border-radius: 60%;
+  height: 2rem;
+  background-color: #495057;
+}
+.item-add-and-display .add-item svg {
+  background-color: #495057;
+  fill: #6C757D;
+}
+.item-add-and-display .add-item svg:hover {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */

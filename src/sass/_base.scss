@@ -29,12 +29,33 @@ main {
     svg {
         width: 1.2rem;
         height: 1.2rem;
+        transition: all .2s;
+    }
 
-        &:hover {
+    button {
+
+        border: none;
+        background-color: white;
+        // border-radius: 50%;
+
+        .check:hover{
+            fill: green;
             cursor: pointer;
         }
 
-        transition: all .2s;
-        
+        .edit:hover {
+            fill: yellow;
+            cursor: pointer;
+        }
+
+        .delete:hover {
+            fill:red;
+            cursor: pointer;
+        }
+
+        .submit:hover {
+            fill: green;
+            cursor: pointer;
+        }
     }
 }
