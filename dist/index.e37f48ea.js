@@ -596,6 +596,10 @@ var _addItemViewJsDefault = parcelHelpers.interopDefault(_addItemViewJs);
 const controlItemDisplay = function(day = _modelJs.state.selectedDay) {
     (0, _listViewJsDefault.default).render(_modelJs.state.items[day].items);
 };
+// DISPLAY SIDE-NAV
+const controlSideNavDisplay = function(day = _modelJs.state.selectedDay) {
+    (0, _daySelectorViewJsDefault.default).render(_modelJs.state.selectedDay);
+};
 // ADD ITEM TO LIST
 const addItemController = function(formData) {
     const dataObject = Object.fromEntries(formData.entries());
@@ -617,9 +621,11 @@ const removeItemController = function(id) {
 const switchDayController = function(day) {
     _modelJs.setSelectedDay(day);
     controlItemDisplay();
+    controlSideNavDisplay();
 };
 function init() {
     controlItemDisplay();
+    controlSideNavDisplay();
     (0, _daySelectorViewJsDefault.default).addHandlerDayChange(switchDayController);
     (0, _addItemViewJsDefault.default).addHandlerOnSubmit(addItemController);
     (0, _listViewJsDefault.default).addHandlerEditAndDeleteItem(editItemController, removeItemController);
@@ -947,7 +953,21 @@ parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
 class DaySelectorView extends (0, _viewJsDefault.default) {
-    _parent = document.querySelector(".select-day");
+    _parent = document.querySelector(".select-day__items");
+    _generateMarkup() {
+        return [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+        ].map((day)=>{
+            if (day === this._data) return `<li class="select-day__item select-day__item--select">${day}</li>`;
+            else return `<li class="select-day__item">${day}</li>`;
+        }).join("");
+    }
     addHandlerDayChange(handler) {
         this._parent.addEventListener("click", (e)=>{
             console.log(e.target.innerText.trim());

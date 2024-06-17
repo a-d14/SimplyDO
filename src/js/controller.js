@@ -10,6 +10,11 @@ const controlItemDisplay = function(day = model.state.selectedDay) {
     listView.render(model.state.items[day].items);
 }
 
+// DISPLAY SIDE-NAV
+const controlSideNavDisplay = function(day = model.state.selectedDay) {
+    daySelectorView.render(model.state.selectedDay);
+}
+
 // ADD ITEM TO LIST
 const addItemController = function(formData) {
     const dataObject = Object.fromEntries(formData.entries());
@@ -36,10 +41,12 @@ const removeItemController = function(id) {
 const switchDayController = function(day) {
     model.setSelectedDay(day);
     controlItemDisplay();
+    controlSideNavDisplay();
 }
 
 function init() {
     controlItemDisplay();
+    controlSideNavDisplay();
     daySelectorView.addHandlerDayChange(switchDayController);
     addItemView.addHandlerOnSubmit(addItemController);
     listView.addHandlerEditAndDeleteItem(editItemController, removeItemController);
