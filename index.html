@@ -13,7 +13,7 @@
         <main>
             <div class="select-day">
                 <ul class="select-day__items">
-                    <li class="select-day__item">monday</li>
+                    <li class="select-day__item select-day__item--select">monday</li>
                     <li class="select-day__item">tuesday</li>
                     <li class="select-day__item">wednesday</li>
                     <li class="select-day__item">thursday</li>
@@ -25,7 +25,11 @@
             <div class="item-add-and-display">
                 <form class="add-item">
                     <input name="itemEntry" type="text" id="item-entry" />
-                    <button type="submit" id="add-item">Submit</button>
+                    <button type="submit" id="add-item">
+                        <svg class="check">
+                            <use href="./src/assets/icons.svg#icon-plus"></use>
+                        </svg>
+                    </button>
                 </form>
                 <ul class="list-items" id="list-items">
                 </ul>

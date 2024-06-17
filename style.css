@@ -1,45 +1,92 @@
+html {
+  height: 100vh;
+}
+
 body {
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 100vh;
   font-size: 66.5%;
+  background-color: #E9ECEF;
 }
 
 header {
   flex: 0 0 20%;
+  width: 100%;
 }
 
 main {
   display: flex;
-  border: 1px solid green;
   justify-content: center;
-  flex: 0 0 80%;
+  flex: 0 0 70%;
+  width: 60%;
+  background-color: #DEE2E6;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 2rem;
+}
+main svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  transition: all 0.2s;
+}
+main svg:hover {
+  cursor: pointer;
+}
+
+.select-day {
+  flex: 0 0 20%;
+  position: relative;
+  font-size: 1.6rem;
+}
+.select-day__items {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.select-day__item {
+  padding: 7% 3%;
+  color: #6C757D;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.select-day__item:hover {
+  color: black;
+}
+.select-day__item--select {
+  color: black;
 }
 
 .item-add-and-display {
-  flex: 0 0 60%;
-  border: 1px solid red;
+  flex: 0 0 80%;
   position: relative;
 }
 .item-add-and-display .list-items {
   list-style-type: none;
-  margin: 0;
+  margin-top: 2rem;
   padding: 0;
   position: absolute;
   width: 60%;
   top: 5rem;
   left: 50%;
   transform: translateX(-50%);
-  border: 1px solid blue;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .item-add-and-display .list-item {
-  border: 1px solid red;
-  border-radius: 3px;
   display: flex;
   justify-content: space-between;
   padding: 2% 3%;
   align-items: center;
   margin: 0.5rem 0.5rem;
+  color: #6C757D;
+}
+.item-add-and-display .list-item:not(:last-child) {
+  border-bottom: 1px solid #ADB5BD;
 }
 .item-add-and-display .list-item li {
   width: 74%;
@@ -56,14 +103,6 @@ main {
   border: none;
   background-color: white;
 }
-.item-add-and-display .list-item__controls button svg {
-  width: 1.2rem;
-  height: 1.2rem;
-  transition: all 0.2s;
-}
-.item-add-and-display .list-item__controls button svg:hover {
-  cursor: pointer;
-}
 .item-add-and-display .list-item__controls button .check:hover {
   fill: green;
 }
@@ -77,35 +116,18 @@ main {
   fill: green;
 }
 .item-add-and-display .add-item {
-  width: 60%;
+  width: 90%;
   position: absolute;
-  top: 3.5rem;
+  top: 3rem;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
 }
 .item-add-and-display .add-item input {
   display: inline-block;
-  width: 88%;
-}
-
-.select-day {
-  flex: 0 0 40%;
-  border: 1px solid red;
-  position: relative;
-  font-size: 1.6rem;
-}
-.select-day__items {
-  position: absolute;
-  top: 5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.select-day__item {
-  padding: 10% 3%;
+  width: 70%;
+  border: none;
+  outline: none;
 }
 
 /*# sourceMappingURL=style.css.map */

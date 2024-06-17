@@ -3,33 +3,72 @@
 
 // LIST ITEM
 
+// DAY SELECT
+.select-day {
+    flex: 0 0 20%;
+    position: relative;
+    font-size: 1.6rem;
+
+    &__items {
+        position: absolute;
+        top: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__item {
+        padding: 7% 3%;
+        color: #6C757D;
+        cursor: pointer;
+
+        transition: all .3s;
+
+        &:hover {
+            color: black;
+        }
+
+        &--select {
+            color: black;
+        }
+    }
+
+}
+
 .item-add-and-display {
 
-    flex: 0 0 60%; 
-    border: 1px solid red;
+    flex: 0 0 80%; 
     // padding: 1% 3%;
     position: relative;
 
     .list-items {
         list-style-type: none;
-        margin: 0;
+        margin-top: 2rem;
         padding: 0;
         position: absolute;
         width: 60%;
         top: 5rem;
         left: 50%;
         transform: translateX(-50%);
-        border: 1px solid blue;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
     }
 
     .list-item {
-        border: 1px solid red;
-        border-radius: 3px;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid #ADB5BD;
+        }
+
         display: flex;
         justify-content: space-between;
         padding: 2% 3%;
         align-items: center;
         margin: .5rem .5rem;
+        color: #6C757D;
     
         li {
             // color: red;
@@ -49,18 +88,6 @@
                 border: none;
                 background-color: white;
                 // border-radius: 50%;
-
-                svg {
-                    width: 1.2rem;
-                    height: 1.2rem;
-
-                    &:hover {
-                        cursor: pointer;
-                    }
-
-                    transition: all .2s;
-                    
-                }
 
                 .check:hover{
                     fill: green;
@@ -84,10 +111,10 @@
     }
 
     .add-item {
-        width: 60%;
+        width: 90%;
 
         position: absolute;
-        top: 3.5rem;
+        top: 3rem;
         left: 50%;
         transform: translate(-50%, -50%);
         // border: 1px solid black;
@@ -95,30 +122,9 @@
         
         input {
             display: inline-block;
-            width: 88%;
+            width: 70%;
+            border: none;
+            outline: none;
         }
     }
-}
-
-// DAY SELECT
-.select-day {
-    flex: 0 0 40%;
-    border: 1px solid red;
-    position: relative;
-    font-size: 1.6rem;
-
-    &__items {
-        position: absolute;
-        top: 5rem;
-        left: 50%;
-        transform: translateX(-50%);
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    &__item {
-        padding: 10% 3%;
-    }
-
 }
