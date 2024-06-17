@@ -12,7 +12,7 @@ const controlItemDisplay = function(day = model.state.selectedDay) {
 
 // DISPLAY SIDE-NAV
 const controlSideNavDisplay = function(day = model.state.selectedDay) {
-    daySelectorView.render(model.state.selectedDay);
+    daySelectorView.render(day);
 }
 
 // ADD ITEM TO LIST
@@ -25,6 +25,7 @@ const addItemController = function(dataObject) {
     controlItemDisplay();
 }
 
+// EDIT ITEM
 const editItemController = function(id, content = null) {
     model.toggleEdit(id, content);
     controlItemDisplay();
@@ -33,6 +34,12 @@ const editItemController = function(id, content = null) {
 // REMOVE ITEM FROM LIST
 const removeItemController = function(id) {
     model.setItems(model.state.items[model.state.selectedDay].items.filter((item) => item.id != id));
+    controlItemDisplay();
+}
+
+// ITEM COMPLETED
+const completeItemController = function(id) {
+    model.setItemComplete(id);
     controlItemDisplay();
 }
 
@@ -48,7 +55,7 @@ function init() {
     controlSideNavDisplay();
     daySelectorView.addHandlerDayChange(switchDayController);
     addItemView.addHandlerOnSubmit(addItemController);
-    listView.addHandlerEditAndDeleteItem(editItemController, removeItemController);
+    listView.addHandlerEditAndDeleteItem(editItemController, removeItemController, completeItemController);
 }
 
 init();

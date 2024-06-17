@@ -74,5 +74,10 @@ main {
             fill: green;
             cursor: pointer;
         }
+
+        .cross:hover {
+            fill: orange;
+            cursor: pointer;
+        }
     }
 }

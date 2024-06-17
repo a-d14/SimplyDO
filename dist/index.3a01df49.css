@@ -74,6 +74,11 @@ main button .submit:hover {
   cursor: pointer;
 }
 
+main button .cross:hover {
+  fill: orange;
+  cursor: pointer;
+}
+
 .select-day {
   flex: 0 0 20%;
   font-size: 1.6rem;

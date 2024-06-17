@@ -31,12 +31,19 @@ class ItemView extends View {
         } else {
             return `
                 <div class="list-item">
-                    <li data-id=${this._data.id}>${this._data.content}</li>
+                    <li data-id=${this._data.id}>${this._data.completed ? `<s>${this._data.content}</s>` : `${this._data.content}`}</li>
                     <div class="list-item__controls">
                         <button type="button" class="list-item__controls--complete">
-                            <svg class="check">
-                                <use href="${icons}#icon-checkmark2"></use>
-                            </svg>
+                            ${!this._data.completed ? 
+                                `<svg class="check">
+                                    <use href="${icons}#icon-checkmark2"></use>
+                                </svg>` : 
+                                `
+                                <svg class="cross">
+                                    <use href="${icons}#icon-cross"></use>
+                                </svg>
+                                `
+                            }
                         </button>
                         <button type="button" class="list-item__controls--edit">
                             <svg class="edit">

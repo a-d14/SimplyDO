@@ -64,6 +64,10 @@ main button .submit:hover {
   fill: green;
   cursor: pointer;
 }
+main button .cross:hover {
+  fill: orange;
+  cursor: pointer;
+}
 
 .select-day {
   flex: 0 0 20%;

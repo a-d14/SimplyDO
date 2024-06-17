@@ -598,7 +598,7 @@ const controlItemDisplay = function(day = _modelJs.state.selectedDay) {
 };
 // DISPLAY SIDE-NAV
 const controlSideNavDisplay = function(day = _modelJs.state.selectedDay) {
-    (0, _daySelectorViewJsDefault.default).render(_modelJs.state.selectedDay);
+    (0, _daySelectorViewJsDefault.default).render(day);
 };
 // ADD ITEM TO LIST
 const addItemController = function(dataObject) {
@@ -607,6 +607,7 @@ const addItemController = function(dataObject) {
     _modelJs.addItem(dataObject);
     controlItemDisplay();
 };
+// EDIT ITEM
 const editItemController = function(id, content = null) {
     _modelJs.toggleEdit(id, content);
     controlItemDisplay();
@@ -614,6 +615,11 @@ const editItemController = function(id, content = null) {
 // REMOVE ITEM FROM LIST
 const removeItemController = function(id) {
     _modelJs.setItems(_modelJs.state.items[_modelJs.state.selectedDay].items.filter((item)=>item.id != id));
+    controlItemDisplay();
+};
+// ITEM COMPLETED
+const completeItemController = function(id) {
+    _modelJs.setItemComplete(id);
     controlItemDisplay();
 };
 // SWITCH BETWEEN DAYS
@@ -627,7 +633,7 @@ function init() {
     controlSideNavDisplay();
     (0, _daySelectorViewJsDefault.default).addHandlerDayChange(switchDayController);
     (0, _addItemViewJsDefault.default).addHandlerOnSubmit(addItemController);
-    (0, _listViewJsDefault.default).addHandlerEditAndDeleteItem(editItemController, removeItemController);
+    (0, _listViewJsDefault.default).addHandlerEditAndDeleteItem(editItemController, removeItemController, completeItemController);
 }
 init();
 
@@ -639,6 +645,7 @@ parcelHelpers.export(exports, "setItems", ()=>setItems);
 parcelHelpers.export(exports, "addItem", ()=>addItem);
 parcelHelpers.export(exports, "setSelectedDay", ()=>setSelectedDay);
 parcelHelpers.export(exports, "toggleEdit", ()=>toggleEdit);
+parcelHelpers.export(exports, "setItemComplete", ()=>setItemComplete);
 const state = {
     items: {
         "monday": {
@@ -646,22 +653,26 @@ const state = {
                 {
                     id: 1,
                     content: "Buy groceries",
-                    edit: false
+                    edit: false,
+                    completed: false
                 },
                 {
                     id: 2,
                     content: "Call the doctor",
-                    edit: false
+                    edit: false,
+                    completed: false
                 },
                 {
                     id: 3,
                     content: "Attend team meeting",
-                    edit: false
+                    edit: false,
+                    completed: false
                 },
                 {
                     id: 4,
                     content: "Go for a run",
-                    edit: false
+                    edit: false,
+                    completed: false
                 }
             ],
             length: 4
@@ -671,7 +682,8 @@ const state = {
                 {
                     id: 3,
                     content: "Attend team meeting",
-                    edit: false
+                    edit: false,
+                    completed: false
                 }
             ],
             length: 1
@@ -681,12 +693,14 @@ const state = {
                 {
                     id: 4,
                     content: "Go for a run",
-                    edit: false
+                    edit: false,
+                    completed: false
                 },
                 {
                     id: 5,
                     content: "Read a book",
-                    edit: false
+                    edit: false,
+                    completed: false
                 }
             ],
             length: 2
@@ -696,12 +710,14 @@ const state = {
                 {
                     id: 6,
                     content: "Write project report",
-                    edit: false
+                    edit: false,
+                    completed: false
                 },
                 {
                     id: 7,
                     content: "Visit the bank",
-                    edit: false
+                    edit: false,
+                    completed: false
                 }
             ],
             length: 2
@@ -711,12 +727,14 @@ const state = {
                 {
                     id: 8,
                     content: "Prepare for presentation",
-                    edit: false
+                    edit: false,
+                    completed: false
                 },
                 {
                     id: 9,
                     content: "Watch a movie",
-                    edit: false
+                    edit: false,
+                    completed: false
                 }
             ],
             length: 2
@@ -726,12 +744,14 @@ const state = {
                 {
                     id: 10,
                     content: "Clean the house",
-                    edit: false
+                    edit: false,
+                    completed: false
                 },
                 {
                     id: 11,
                     content: "Meet friends for lunch",
-                    edit: false
+                    edit: false,
+                    completed: false
                 }
             ],
             length: 2
@@ -741,7 +761,8 @@ const state = {
                 {
                     id: 12,
                     content: "Relax and unwind",
-                    edit: false
+                    edit: false,
+                    completed: false
                 }
             ],
             length: 1
@@ -768,6 +789,10 @@ const setSelectedDay = function(day) {
 const toggleEdit = function(id, content = null) {
     if (content != null) state.items[state.selectedDay].items.find((item)=>item.id === id).content = content;
     state.items[state.selectedDay].items.find((item)=>item.id === id).edit = !state.items[state.selectedDay].items.find((item)=>item.id === id).edit;
+};
+const setItemComplete = function(id) {
+    state.items[state.selectedDay].items.find((item)=>item.id === id).completed = !state.items[state.selectedDay].items.find((item)=>item.id === id).completed;
+    console.log(state.items[state.selectedDay].items.find((item)=>item.id === id));
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
@@ -812,17 +837,17 @@ class ListView extends (0, _viewJsDefault.default) {
     constructor(){
         super();
     }
-    addHandlerEditAndDeleteItem(handlerEdit, handlerDelete) {
+    addHandlerEditAndDeleteItem(handlerEdit, handlerDelete, handlerComplete) {
         this._parent.addEventListener("click", (e)=>{
-            console.log("onclick");
             const targetElement = e.target.closest(".list-item").getElementsByTagName("li")[0];
             const targetId = targetElement.dataset.id;
-            console.log(targetId);
-            console.log(e.target);
             if (e.target.closest("button").className === "list-item__controls--delete") handlerDelete(targetId);
             else if (e.target.closest("button").className === "list-item__controls--edit" || e.target.closest("button").className === "list-item__controls--submit") {
                 const inputElement = targetElement.getElementsByTagName("input")[0];
                 handlerEdit(+targetId, inputElement ? inputElement.value : null);
+            } else if (e.target.closest("button").className === "list-item__controls--complete") {
+                console.log("complete");
+                handlerComplete(+targetId);
             }
         });
     }
@@ -884,12 +909,16 @@ class ItemView extends (0, _viewJsDefault.default) {
             `;
         } else return `
                 <div class="list-item">
-                    <li data-id=${this._data.id}>${this._data.content}</li>
+                    <li data-id=${this._data.id}>${this._data.completed ? `<s>${this._data.content}</s>` : `${this._data.content}`}</li>
                     <div class="list-item__controls">
                         <button type="button" class="list-item__controls--complete">
-                            <svg class="check">
-                                <use href="${0, _iconsSvgDefault.default}#icon-checkmark2"></use>
-                            </svg>
+                            ${!this._data.completed ? `<svg class="check">
+                                    <use href="${0, _iconsSvgDefault.default}#icon-checkmark2"></use>
+                                </svg>` : `
+                                <svg class="cross">
+                                    <use href="${0, _iconsSvgDefault.default}#icon-cross"></use>
+                                </svg>
+                                `}
                         </button>
                         <button type="button" class="list-item__controls--edit">
                             <svg class="edit">
