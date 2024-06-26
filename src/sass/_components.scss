@@ -8,6 +8,7 @@
     flex: 0 0 20%;
     position: relative;
     font-size: 1.6rem;
+    background-color: #1A1B1B;
 
     &__items {
         position: absolute;
@@ -41,6 +42,7 @@
 
     flex: 0 0 80%;
     position: relative;
+    background-color: #2D2C2D;
 
     .list-items {
         list-style-type: none;

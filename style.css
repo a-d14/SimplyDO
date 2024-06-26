@@ -1,5 +1,6 @@
 html {
   height: 100vh;
+  box-sizing: border-box;
 }
 
 body {
@@ -8,7 +9,7 @@ body {
   align-items: center;
   height: 100vh;
   font-size: 66.5%;
-  background-color: #E9ECEF;
+  background-color: #131213;
 }
 
 .header {
@@ -35,9 +36,8 @@ main {
   justify-content: center;
   flex: 0 0 70%;
   width: 60%;
-  background-color: #DEE2E6;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
 }
 main svg {
   width: 1.2rem;
@@ -73,6 +73,7 @@ main button .cross:hover {
   flex: 0 0 20%;
   position: relative;
   font-size: 1.6rem;
+  background-color: #1A1B1B;
 }
 .select-day__items {
   position: absolute;
@@ -99,6 +100,7 @@ main button .cross:hover {
 .item-add-and-display {
   flex: 0 0 80%;
   position: relative;
+  background-color: #2D2C2D;
 }
 .item-add-and-display .list-items {
   list-style-type: none;

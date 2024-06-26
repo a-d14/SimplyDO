@@ -1,9 +1,10 @@
 html {
+  box-sizing: border-box;
   height: 100vh;
 }
 
 body {
-  background-color: #e9ecef;
+  background-color: #131213;
   flex-direction: column;
   align-items: center;
   height: 100vh;
@@ -34,13 +35,12 @@ body {
 }
 
 main {
-  background-color: #dee2e6;
-  border-radius: 2rem;
+  border-radius: 1rem;
   flex: 0 0 70%;
   justify-content: center;
   width: 60%;
   display: flex;
-  box-shadow: 0 4px 8px #0003, 0 6px 20px #00000030;
+  overflow: hidden;
 }
 
 main svg {
@@ -80,6 +80,7 @@ main button .cross:hover {
 }
 
 .select-day {
+  background-color: #1a1b1b;
   flex: 0 0 20%;
   font-size: 1.6rem;
   position: relative;
@@ -107,6 +108,7 @@ main button .cross:hover {
 }
 
 .item-add-and-display {
+  background-color: #2d2c2d;
   flex: 0 0 80%;
   position: relative;
 }
