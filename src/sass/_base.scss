@@ -79,26 +79,35 @@ body {
                 background-color: #2D2C2D;
             }
 
+            transition: all 0.2s;
+
             &:hover {
                 cursor: pointer;
+                background-color: #2D2C2D;
             }
 
             &__add-category {
                 margin-top: auto;
-                // align-self: center;
 
                 &__button {
                     border: none;
-                    border-radius: 0.5rem;
+                    border-radius: 2.5rem;
                     background-color: inherit;
 
-                    width: 1.7rem;
-                    height: 1.7rem;
+                    width: 3rem;
+                    height: 3rem;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
 
                     color: white;
+
+                    transition: all .2s;
                     
                     &:hover {
                         cursor: pointer;
+                        background-color: #1A1B1B;
                     }
 
                 }

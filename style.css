@@ -60,26 +60,33 @@ body {
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  transition: all 0.2s;
 }
 .main__navigation--item.selected {
   background-color: #2D2C2D;
 }
 .main__navigation--item:hover {
   cursor: pointer;
+  background-color: #2D2C2D;
 }
 .main__navigation--item__add-category {
   margin-top: auto;
 }
 .main__navigation--item__add-category__button {
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 2.5rem;
   background-color: inherit;
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
+  transition: all 0.2s;
 }
 .main__navigation--item__add-category__button:hover {
   cursor: pointer;
+  background-color: #1A1B1B;
 }
 .main__list {
   flex: 3 0 0;

@@ -61,6 +61,7 @@ body {
   gap: 1.5rem;
   padding: 4% 7%;
   font-size: 1.7rem;
+  transition: all .2s;
   display: flex;
 }
 
@@ -70,6 +71,7 @@ body {
 
 .main__navigation--item:hover {
   cursor: pointer;
+  background-color: #2d2c2d;
 }
 
 .main__navigation--item__add-category {
@@ -80,13 +82,18 @@ body {
   background-color: inherit;
   color: #fff;
   border: none;
-  border-radius: .5rem;
-  width: 1.7rem;
-  height: 1.7rem;
+  border-radius: 2.5rem;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  transition: all .2s;
+  display: flex;
 }
 
 .main__navigation--item__add-category__button:hover {
   cursor: pointer;
+  background-color: #1a1b1b;
 }
 
 .main__list {
