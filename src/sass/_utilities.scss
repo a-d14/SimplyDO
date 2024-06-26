@@ -1,0 +1,32 @@
+.icon {
+    background-color: inherit;
+    border: none;
+
+    &--small {
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+
+    &--medium {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+
+
+    &--inbox {
+        fill: cyan;
+    }
+
+    &--heart {
+        fill: red;
+    }
+
+    &--star {
+        fill: yellow;
+    }
+
+    &--plus {
+        fill: white;
+    }
+
+}
