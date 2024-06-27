@@ -1,3 +1,11 @@
+h2 {
+    font-size: 2.2rem;
+}
+
+p {
+    font-size: 1.7rem;
+}
+
 .icon {
     background-color: inherit;
     border: none;
@@ -19,6 +27,10 @@
 
     &--heart {
         fill: red;
+    }
+
+    &--house {
+        fill: green;
     }
 
     &--star {

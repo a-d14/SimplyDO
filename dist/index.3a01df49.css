@@ -84,6 +84,29 @@ body {
   color: #fff;
 }
 
+.main__list--items__category {
+  margin-top: 2rem;
+  padding: 2% 3%;
+}
+
+.main__list--items__category--header {
+  border-bottom: 1px solid #fff;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: .7rem;
+  display: flex;
+}
+
+.main__list--items__category--items {
+  padding: 2% .9%;
+  list-style-type: none;
+}
+
+.main__list--items__category--items__item {
+  gap: 1.35rem;
+  display: flex;
+}
+
 .main__navigation {
   background-color: #1a1b1b;
   border-right: 1px solid red;
@@ -124,7 +147,8 @@ body {
 }
 
 .main__navigation--item__add-category:hover {
-  background-color: inherit;
+  cursor: pointer;
+  background-color: #1a1b1b;
 }
 
 .main__navigation--item__add-category__button {
@@ -196,6 +220,14 @@ body {
   cursor: pointer;
 }
 
+h2 {
+  font-size: 2.2rem;
+}
+
+p {
+  font-size: 1.7rem;
+}
+
 .icon {
   background-color: inherit;
   border: none;
@@ -217,6 +249,10 @@ body {
 
 .icon--heart {
   fill: red;
+}
+
+.icon--house {
+  fill: green;
 }
 
 .icon--star {

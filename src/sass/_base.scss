@@ -96,6 +96,36 @@ body {
                 }
             }
         }
+
+        &--items {
+
+            &__category {
+
+                margin-top: 2rem;
+
+                padding: 2% 3%;
+
+                &--header {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    border-bottom: 1px solid white;
+                    padding-bottom: 0.7rem;
+                }
+
+                &--items {
+
+                    list-style-type: none;
+                    padding: 2% 0.9%;
+
+                    &__item {
+                        display: flex;
+                        gap: 1.35rem;
+                    }
+                }
+
+            }
+        }
     }
 
 
