@@ -30,3 +30,47 @@
     }
 
 }
+
+.input {
+    outline: none;
+    display: block;
+
+    color: gray;
+
+    &:focus {
+        background-color: inherit;
+        color: white;
+    }
+
+    &__large {
+        padding: 0.7rem 1.7rem;
+        border-radius: 5rem;
+        font-size: 2.1rem;
+    }
+
+    &__small {
+        border-radius: 2rem;
+        width: 100%;
+        padding: 0.6rem 1.5rem;
+        font-size: 1.7rem;
+    }
+}
+
+.dropdown {
+    color: gray;
+    background-color: #2D2C2D;
+    border: 1px solid #2D2C2D;
+
+    &:focus {
+        background-color: inherit;
+        color: white;
+    }
+
+    & option {
+        text-align: start;
+    }
+}
+
+.hidden {
+    visibility: hidden;
+}
