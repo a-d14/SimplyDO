@@ -8,8 +8,8 @@
     <body>
         <header class="header">
             <div class="header__content">
-                <h1 class="header__content--main">SimplyDO</h1>
-                <p class="header__content--subtext">Get things done.</p>
+                <h1 class="header__content--main">todo</h1>
+                <p class="header__content--subtext"></p>
             </div>
         </header>
         <main class="main">
@@ -34,9 +34,12 @@
                         Personal
                     </div>
                     <div class="main__navigation--item">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--folder" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <!-- <svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--folder" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path fill-rule="evenodd" d="M3 6a2 2 0 0 1 2-2h5.532a2 2 0 0 1 1.536.72l1.9 2.28H3V6Zm0 3v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9H3Z" clip-rule="evenodd"/>
-                        </svg>                      
+                        </svg> -->
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white icon--small" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 0 0-2 2v4m5-6h8M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m0 0h3a2 2 0 0 1 2 2v4m0 0v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6m18 0s-4 2-9 2-9-2-9-2m9-2h.01"/>
+                        </svg>                          
                         Work
                     </div>
                     <div class="main__navigation--item">
@@ -68,11 +71,28 @@
             <div class="main__list">
                 <form class="main__list--add-item" autocomplete="off" class="add-item">
                     <input class="main__list--add-item-input input input__large" placeholder="Enter a task here..." name="itemEntry" type="text" id="item-entry" />
-                    <button type="submit" class="main__list--add-item-button">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--medium icon--plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
-                        </svg> 
-                    </button>
+                    <div class="main__list--add-item__controls">
+                        <button class="main__list--add-item-button">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white icon--medium icon--calendar" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+                            </svg>
+                            Date
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white icon--medium" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                            </svg>       
+                        </button>
+                        <button class="main__list--add-item-button">
+                            Priority
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white icon--medium" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                            </svg>  
+                        </button>
+                        <button type="submit" class="main__list--add-item-button main__list--add-item-button-add">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--medium icon--plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                            </svg> 
+                        </button>
+                    </div>
                     <!-- <button type="submit" id="add-item">
                         <svg class="check">
                             <use href="./src/assets/icons.svg#icon-plus"></use>

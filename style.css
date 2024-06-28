@@ -52,31 +52,48 @@ body {
 .main__list--add-item {
   margin-top: 1rem;
   border: 1px solid red;
-  border-radius: 5.2rem;
+  border-radius: 1rem;
   padding: 0.8rem 0.8rem;
   background-color: #1A1B1B;
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
 }
 .main__list--add-item > * {
   border: none;
+}
+.main__list--add-item-input {
+  width: 100%;
   background-color: #2D2C2D;
   border: 0.1rem solid #2D2C2D;
 }
-.main__list--add-item-input {
-  flex: 3 0 0;
+.main__list--add-item__controls {
+  display: flex;
+  gap: 2rem;
+  padding: 1% 1%;
 }
 .main__list--add-item-button {
-  flex: 0.2 0 0;
-  border-radius: 50%;
+  border-radius: 1rem;
+  background-color: #2D2C2D;
+  border: 0.1rem solid #2D2C2D;
+  overflow: hidden;
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  padding: 1% 2%;
 }
 .main__list--add-item-button:hover {
   cursor: pointer;
   background-color: inherit;
   color: white;
+}
+.main__list--add-item-button:hover svg {
+  fill: none;
+}
+.main__list--add-item-button-add {
+  margin-left: auto;
 }
 .main__list--items__category {
   margin-top: 2rem;
@@ -231,6 +248,9 @@ p {
 }
 .icon--plus {
   fill: white;
+}
+.icon--calendar {
+  fill: orange;
 }
 
 .input {

@@ -54,7 +54,8 @@ body {
 .main__list--add-item {
   background-color: #1a1b1b;
   border: 1px solid red;
-  border-radius: 5.2rem;
+  border-radius: 1rem;
+  flex-direction: column;
   gap: .5rem;
   margin-top: 1rem;
   padding: .8rem;
@@ -62,26 +63,46 @@ body {
 }
 
 .main__list--add-item > * {
-  background-color: #2d2c2d;
-  border: .1rem solid #2d2c2d;
+  border: none;
 }
 
 .main__list--add-item-input {
-  flex: 3 0 0;
+  background-color: #2d2c2d;
+  border: .1rem solid #2d2c2d;
+  width: 100%;
+}
+
+.main__list--add-item__controls {
+  gap: 2rem;
+  padding: 1%;
+  display: flex;
 }
 
 .main__list--add-item-button {
-  border-radius: 50%;
-  flex: .2 0 0;
+  background-color: #2d2c2d;
+  border: .1rem solid #2d2c2d;
+  border-radius: 1rem;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
+  padding: 1% 2%;
+  font-size: 1.5rem;
   display: flex;
+  overflow: hidden;
 }
 
 .main__list--add-item-button:hover {
   cursor: pointer;
   background-color: inherit;
   color: #fff;
+}
+
+.main__list--add-item-button:hover svg {
+  fill: none;
+}
+
+.main__list--add-item-button-add {
+  margin-left: auto;
 }
 
 .main__list--items__category {
@@ -261,6 +282,10 @@ p {
 
 .icon--plus {
   fill: #fff;
+}
+
+.icon--calendar {
+  fill: orange;
 }
 
 .input {

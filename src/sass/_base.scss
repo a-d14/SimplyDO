@@ -62,37 +62,66 @@ body {
         &--add-item {
             margin-top: 1rem;
             border: 1px solid red;
-            border-radius: 5.2rem;
+            border-radius: 1rem;
             padding: 0.8rem 0.8rem;
 
             background-color: #1A1B1B;
 
             display: flex;
+            flex-direction: column;
+            // flex-wrap: wrap;
             gap: 0.5rem;
 
             & > * {
                 border: none;
-                background-color: #2D2C2D;
-                border: 0.1rem solid #2D2C2D;
+                // background-color: #2D2C2D;
+                // border: 0.1rem solid #2D2C2D;
             }
 
             &-input {
-                flex: 3 0 0;
+                width: 100%;
+                background-color: #2D2C2D;
+                border: 0.1rem solid #2D2C2D;
+                // flex: 3 0 0;
+            }
+
+            &__controls {
+                display: flex;
+                gap: 2rem;
+
+                padding: 1% 1%;
             }
 
             &-button {
-                flex: 0.2 0 0;
+                // flex: 0.25 0 0;
 
-                border-radius: 50%;
+                border-radius: 1rem;
+                background-color: #2D2C2D;
+                border: 0.1rem solid #2D2C2D;
+
+                overflow: hidden;
+
+                font-size: 1.5rem;
 
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                gap: 1rem;
+
+                padding: 1% 2%;
 
                 &:hover {
                     cursor: pointer;
                     background-color: inherit;
                     color: white;
+
+                    svg {
+                        fill: none;
+                    }
+                }
+                
+                &-add {
+                    margin-left: auto;
                 }
             }
         }
