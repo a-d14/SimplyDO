@@ -55,9 +55,13 @@ body {
   border-radius: 1rem;
   padding: 0.8rem 0.8rem;
   background-color: #1A1B1B;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+}
+.main__list--add-item__date {
+  background-color: black;
+  color: white;
 }
 .main__list--add-item > * {
   border: none;
@@ -67,10 +71,20 @@ body {
   background-color: #2D2C2D;
   border: 0.1rem solid #2D2C2D;
 }
+.main__list--add-item-input:focus + div, .main__list--add-item-input:not(:placeholder-shown) + div {
+  padding: 1% 1%;
+  opacity: 1;
+  opacity: 1;
+  height: auto;
+}
 .main__list--add-item__controls {
   display: flex;
   gap: 2rem;
-  padding: 1% 1%;
+  padding: 0;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s;
 }
 .main__list--add-item-button {
   border-radius: 1rem;

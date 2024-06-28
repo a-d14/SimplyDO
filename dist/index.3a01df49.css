@@ -56,10 +56,15 @@ body {
   border: 1px solid red;
   border-radius: 1rem;
   flex-direction: column;
-  gap: .5rem;
   margin-top: 1rem;
   padding: .8rem;
   display: flex;
+  position: relative;
+}
+
+.main__list--add-item__date {
+  color: #fff;
+  background-color: #000;
 }
 
 .main__list--add-item > * {
@@ -72,10 +77,21 @@ body {
   width: 100%;
 }
 
-.main__list--add-item__controls {
-  gap: 2rem;
+.main__list--add-item-input:focus + div, .main__list--add-item-input:not(:placeholder-shown) + div {
+  opacity: 1;
+  opacity: 1;
+  height: auto;
   padding: 1%;
+}
+
+.main__list--add-item__controls {
+  opacity: 0;
+  gap: 2rem;
+  height: 0;
+  padding: 0;
+  transition: all .3s;
   display: flex;
+  overflow: hidden;
 }
 
 .main__list--add-item-button {
