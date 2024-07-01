@@ -1,6 +1,6 @@
 import View from "./View.js";
 
-class DaySelectorView extends View {
+class SidebarView extends View {
 
     _parent = document.querySelector('.select-day__items');
 
@@ -26,4 +26,4 @@ class DaySelectorView extends View {
 
 }
 
-export default new DaySelectorView();
+export default new SidebarView();

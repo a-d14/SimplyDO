@@ -588,8 +588,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _modelJs = require("./model.js");
 var _listViewJs = require("./views/ListView.js");
 var _listViewJsDefault = parcelHelpers.interopDefault(_listViewJs);
-var _daySelectorViewJs = require("./views/daySelectorView.js");
-var _daySelectorViewJsDefault = parcelHelpers.interopDefault(_daySelectorViewJs);
+var _sidebarViewJs = require("./views/sidebarView.js");
+var _sidebarViewJsDefault = parcelHelpers.interopDefault(_sidebarViewJs);
 var _addItemViewJs = require("./views/addItemView.js");
 var _addItemViewJsDefault = parcelHelpers.interopDefault(_addItemViewJs);
 // DISPLAY ITEMS
@@ -597,8 +597,8 @@ const controlItemDisplay = function(day = _modelJs.state.selectedDay) {
     (0, _listViewJsDefault.default).render(_modelJs.state.items[day].items);
 };
 // DISPLAY SIDE-NAV
-const controlSideNavDisplay = function(day = _modelJs.state.selectedDay) {
-    (0, _daySelectorViewJsDefault.default).render(day);
+const controlSidebarDisplay = function() {
+    (0, _sidebarViewJsDefault.default).render();
 };
 // ADD ITEM TO LIST
 const addItemController = function(dataObject) {
@@ -630,199 +630,188 @@ const switchDayController = function(day) {
 };
 function init() {
     controlItemDisplay();
-    controlSideNavDisplay();
-    (0, _daySelectorViewJsDefault.default).addHandlerDayChange(switchDayController);
+    controlSidebarDisplay();
+    (0, _sidebarViewJsDefault.default).addHandlerDayChange(switchDayController);
     (0, _addItemViewJsDefault.default).addHandlerOnSubmit(addItemController);
     (0, _listViewJsDefault.default).addHandlerEditAndDeleteItem(editItemController, removeItemController, completeItemController);
 }
 init();
 
-},{"./model.js":"Y4A21","./views/ListView.js":"bzxVY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/daySelectorView.js":"11qa1","./views/addItemView.js":"eNQZt"}],"Y4A21":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "state", ()=>state);
-parcelHelpers.export(exports, "setItems", ()=>setItems);
-parcelHelpers.export(exports, "addItem", ()=>addItem);
-parcelHelpers.export(exports, "setSelectedDay", ()=>setSelectedDay);
-parcelHelpers.export(exports, "toggleEdit", ()=>toggleEdit);
-parcelHelpers.export(exports, "setItemComplete", ()=>setItemComplete);
-const state = {
-    items: {
-        "monday": {
-            items: [
-                {
-                    id: 1,
-                    content: "Buy groceries",
-                    edit: false,
-                    completed: false
-                },
-                {
-                    id: 2,
-                    content: "Call the doctor",
-                    edit: false,
-                    completed: false
-                },
-                {
-                    id: 3,
-                    content: "Attend team meeting",
-                    edit: false,
-                    completed: false
-                },
-                {
-                    id: 4,
-                    content: "Go for a run",
-                    edit: false,
-                    completed: false
-                }
-            ],
-            length: 4
-        },
-        "tuesday": {
-            items: [
-                {
-                    id: 3,
-                    content: "Attend team meeting",
-                    edit: false,
-                    completed: false
-                }
-            ],
-            length: 1
-        },
-        "wednesday": {
-            items: [
-                {
-                    id: 4,
-                    content: "Go for a run",
-                    edit: false,
-                    completed: false
-                },
-                {
-                    id: 5,
-                    content: "Read a book",
-                    edit: false,
-                    completed: false
-                }
-            ],
-            length: 2
-        },
-        "thursday": {
-            items: [
-                {
-                    id: 6,
-                    content: "Write project report",
-                    edit: false,
-                    completed: false
-                },
-                {
-                    id: 7,
-                    content: "Visit the bank",
-                    edit: false,
-                    completed: false
-                }
-            ],
-            length: 2
-        },
-        "friday": {
-            items: [
-                {
-                    id: 8,
-                    content: "Prepare for presentation",
-                    edit: false,
-                    completed: false
-                },
-                {
-                    id: 9,
-                    content: "Watch a movie",
-                    edit: false,
-                    completed: false
-                }
-            ],
-            length: 2
-        },
-        "saturday": {
-            items: [
-                {
-                    id: 10,
-                    content: "Clean the house",
-                    edit: false,
-                    completed: false
-                },
-                {
-                    id: 11,
-                    content: "Meet friends for lunch",
-                    edit: false,
-                    completed: false
-                }
-            ],
-            length: 2
-        },
-        "sunday": {
-            items: [
-                {
-                    id: 12,
-                    content: "Relax and unwind",
-                    edit: false,
-                    completed: false
-                }
-            ],
-            length: 1
-        }
-    },
-    selectedDay: "monday"
-};
-const setItems = function(items) {
-    state.items[state.selectedDay].items = items;
-};
-const addItem = function(data, day = state.selectedDay) {
-    const itemsOfDay = state.items[day];
-    itemsOfDay.items.push({
-        id: itemsOfDay.length + 1,
-        content: data.itemEntry.trim(),
-        edit: false
-    });
-    itemsOfDay.length++;
-    console.log(state.items[day]);
-};
-const setSelectedDay = function(day) {
-    state.selectedDay = day;
-};
-const toggleEdit = function(id, content = null) {
-    if (content != null) state.items[state.selectedDay].items.find((item)=>item.id === id).content = content;
-    state.items[state.selectedDay].items.find((item)=>item.id === id).edit = !state.items[state.selectedDay].items.find((item)=>item.id === id).edit;
-};
-const setItemComplete = function(id) {
-    state.items[state.selectedDay].items.find((item)=>item.id === id).completed = !state.items[state.selectedDay].items.find((item)=>item.id === id).completed;
-    console.log(state.items[state.selectedDay].items.find((item)=>item.id === id));
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
+},{"./model.js":"Y4A21","./views/ListView.js":"bzxVY","./views/sidebarView.js":"eUObu","./views/addItemView.js":"eNQZt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
+const model = {
+    "personal": {
+        "home": [
+            {
+                id: 1,
+                content: "Buy groceries",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 2,
+                content: "Paint the living room wall",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 3,
+                content: "Do the laundry",
+                edit: false,
+                completed: false,
+                date: null
+            },
+            {
+                id: 4,
+                content: "Clean the garage",
+                edit: false,
+                completed: false,
+                date: null
             }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
+        ],
+        "finances": [
+            {
+                id: 5,
+                content: "File taxes",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 6,
+                content: "Sell XYZ stock",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 7,
+                content: "Buy XYZ crypto",
+                edit: false,
+                completed: false,
+                date: null
+            }
+        ],
+        "family": [
+            {
+                id: 8,
+                content: "Dinner with family",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 9,
+                content: "Build the lego set with the kids",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 10,
+                content: "Buy the christmas presents",
+                edit: false,
+                completed: false,
+                date: null
+            }
+        ]
+    },
+    "work": [
+        {
+            id: 11,
+            content: "Set goals for the quarter with the team",
+            edit: false,
+            completed: false,
+            date: new Date()
+        },
+        {
+            id: 12,
+            content: "Decide on appraisals for the high performers",
+            edit: false,
+            completed: false,
+            date: new Date()
+        },
+        {
+            id: 13,
+            content: "Organize the yearly office getaway",
+            edit: false,
+            completed: false,
+            date: null
+        }
+    ],
+    "hobbies": {
+        "guitar": [
+            {
+                id: 14,
+                content: "Learn the A minor pentatonic scale",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 15,
+                content: "Learn to read sheet notation",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 16,
+                content: "Learn to play Smells like Teen Spirit",
+                edit: false,
+                completed: false,
+                date: null
+            }
+        ],
+        "painting": [
+            {
+                id: 17,
+                content: "Learn the basics of brush strokes",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 18,
+                content: "Learn to make urban sketches",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 19,
+                content: "Finish the bob ross follow along painting",
+                edit: false,
+                completed: false,
+                date: null
+            }
+        ],
+        "gaming": [
+            {
+                id: 20,
+                content: "Learn the Jiggle Peek",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 21,
+                content: "Learn how to play Sage",
+                edit: false,
+                completed: false,
+                date: new Date()
+            },
+            {
+                id: 22,
+                content: "Reach Platinum 3",
+                edit: false,
+                completed: false,
+                date: null
+            }
+        ]
+    },
+    "numItems": 22
 };
 
 },{}],"bzxVY":[function(require,module,exports) {
@@ -876,7 +865,37 @@ class View {
 }
 exports.default = View;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9PReK":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"9PReK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
@@ -890,7 +909,7 @@ class ItemView extends (0, _viewJsDefault.default) {
 }
 exports.default = new ItemView();
 
-},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../assets/icons.svg":"knPe0"}],"knPe0":[function(require,module,exports) {
+},{"./View.js":"5cUXS","url:../../assets/icons.svg":"knPe0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"knPe0":[function(require,module,exports) {
 module.exports = require("8fd43c75e9dfae70").getBundleURL("hWUTQ") + "icons.4112406e.svg" + "?" + Date.now();
 
 },{"8fd43c75e9dfae70":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -928,12 +947,12 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"11qa1":[function(require,module,exports) {
+},{}],"eUObu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
-class DaySelectorView extends (0, _viewJsDefault.default) {
+class SidebarView extends (0, _viewJsDefault.default) {
     _parent = document.querySelector(".select-day__items");
     _generateMarkup() {
         return [
@@ -957,7 +976,7 @@ class DaySelectorView extends (0, _viewJsDefault.default) {
         });
     }
 }
-exports.default = new DaySelectorView();
+exports.default = new SidebarView();
 
 },{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eNQZt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

@@ -4,7 +4,7 @@
   "description": "SimplyDO is a to-do list app with a minimal interface that allows the user to focus on their tasks at hand.",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "rm -rf .parcel-cache && parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

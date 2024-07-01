@@ -1,85 +1,43 @@
-export const state = {
-    items: {
-        "monday": {
-            items: [
-                { id: 1, content: "Buy groceries", edit: false, completed: false },
-                { id: 2, content: "Call the doctor", edit: false, completed: false },
-                { id: 3, content: "Attend team meeting", edit: false, completed: false },
-                { id: 4, content: "Go for a run", edit: false, completed: false },
-            ],
-            length: 4
-        },
-        "tuesday": {
-            items: [
-                { id: 3, content: "Attend team meeting", edit: false, completed: false }
-            ],
-            length: 1
-        },
-        "wednesday": {
-            items: [
-                { id: 4, content: "Go for a run", edit: false, completed: false },
-                { id: 5, content: "Read a book", edit: false, completed: false }
-            ],
-            length: 2
-        },
-        "thursday": {
-            items: [
-                { id: 6, content: "Write project report", edit: false, completed: false },
-                { id: 7, content: "Visit the bank", edit: false, completed: false }
-            ],
-            length: 2
-        },
-        "friday": {
-            items: [
-                { id: 8, content: "Prepare for presentation", edit: false, completed: false },
-                { id: 9, content: "Watch a movie", edit: false, completed: false }
-            ],
-            length: 2
-        },
-        "saturday": {
-            items: [
-                { id: 10, content: "Clean the house", edit: false, completed: false },
-                { id: 11, content: "Meet friends for lunch", edit: false, completed: false }
-            ],
-            length: 2
-        },
-        "sunday": {
-            items: [
-                { id: 12, content: "Relax and unwind", edit: false, completed: false }
-            ],
-            length: 1
-        }
+const model = {
+    "personal": {
+        "home" : [
+            { id: 1, content: "Buy groceries", edit: false, completed: false, date: new Date() },
+            { id: 2, content: "Paint the living room wall", edit: false, completed: false, date: new Date() },
+            { id: 3, content: "Do the laundry", edit: false, completed: false, date: null },
+            { id: 4, content: "Clean the garage", edit: false, completed: false, date: null },
+        ],
+        "finances": [
+            { id: 5, content: "File taxes", edit: false, completed: false, date: new Date() },
+            { id: 6, content: "Sell XYZ stock", edit: false, completed: false, date: new Date() },
+            { id: 7, content: "Buy XYZ crypto", edit: false, completed: false, date: null },
+        ],
+        "family": [
+            { id: 8, content: "Dinner with family", edit: false, completed: false, date: new Date() },
+            { id: 9, content: "Build the lego set with the kids", edit: false, completed: false, date: new Date() },
+            { id: 10, content: "Buy the christmas presents", edit: false, completed: false, date: null },
+        ]
     },
-    selectedDay: "monday"
-};
-
-export const setItems = function(items) {
-    state.items[state.selectedDay].items = items;
-}
-
-export const addItem = function(data, day = state.selectedDay) {
-    const itemsOfDay = state.items[day];
-    itemsOfDay.items.push({id: itemsOfDay.length + 1, content: data.itemEntry.trim(), edit: false});
-    itemsOfDay.length++;
-    console.log(state.items[day]);
-}
-
-export const setSelectedDay = function(day) {
-    state.selectedDay = day;
-}
-
-export const toggleEdit = function(id, content= null) {
-
-    if(content != null)
-        state.items[state.selectedDay].items.find(item => item.id === id).content = content;
-
-    state.items[state.selectedDay].items.find(item => item.id === id).edit = 
-        !state.items[state.selectedDay].items.find(item => item.id === id).edit;
-}
-
-export const setItemComplete = function(id) {
-    state.items[state.selectedDay].items.find((item) => item.id === id).completed = 
-        !state.items[state.selectedDay].items.find((item) => item.id === id).completed;
-    
-    console.log(state.items[state.selectedDay].items.find((item) => item.id === id));
+    "work": [
+        { id: 11, content: "Set goals for the quarter with the team", edit: false, completed: false, date: new Date() },
+        { id: 12, content: "Decide on appraisals for the high performers", edit: false, completed: false, date: new Date() },
+        { id: 13, content: "Organize the yearly office getaway", edit: false, completed: false, date: null },
+    ],
+    "hobbies": {
+        "guitar": [
+            { id: 14, content: "Learn the A minor pentatonic scale", edit: false, completed: false, date: new Date() },
+            { id: 15, content: "Learn to read sheet notation", edit: false, completed: false, date: new Date() },
+            { id: 16, content: "Learn to play Smells like Teen Spirit", edit: false, completed: false, date: null }
+        ],
+        "painting": [
+            { id: 17, content: "Learn the basics of brush strokes", edit: false, completed: false, date: new Date() },
+            { id: 18, content: "Learn to make urban sketches", edit: false, completed: false, date: new Date() },
+            { id: 19, content: "Finish the bob ross follow along painting", edit: false, completed: false, date: null },
+        ],
+        "gaming": [
+            { id: 20, content: "Learn the Jiggle Peek", edit: false, completed: false, date: new Date() },
+            { id: 21, content: "Learn how to play Sage", edit: false, completed: false, date: new Date() },
+            { id: 22, content: "Reach Platinum 3", edit: false, completed: false, date: null },
+        ]
+    },
+    "numItems": 22
 }

@@ -1,7 +1,7 @@
 import * as model from './model.js';
 
 import listView from './views/ListView.js';
-import daySelectorView from './views/daySelectorView.js';
+import sidebarView from './views/sidebarView.js';
 import addItemView from './views/addItemView.js';
 
 
@@ -11,8 +11,8 @@ const controlItemDisplay = function(day = model.state.selectedDay) {
 }
 
 // DISPLAY SIDE-NAV
-const controlSideNavDisplay = function(day = model.state.selectedDay) {
-    daySelectorView.render(day);
+const controlSidebarDisplay = function() {
+    sidebarView.render();
 }
 
 // ADD ITEM TO LIST
@@ -52,8 +52,8 @@ const switchDayController = function(day) {
 
 function init() {
     controlItemDisplay();
-    controlSideNavDisplay();
-    daySelectorView.addHandlerDayChange(switchDayController);
+    controlSidebarDisplay();
+    sidebarView.addHandlerDayChange(switchDayController);
     addItemView.addHandlerOnSubmit(addItemController);
     listView.addHandlerEditAndDeleteItem(editItemController, removeItemController, completeItemController);
 }
