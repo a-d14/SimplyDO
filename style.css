@@ -142,6 +142,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow: scroll;
 }
 .main__navigation--item {
   padding: 4% 7%;
@@ -159,15 +160,19 @@ body {
   cursor: pointer;
   background-color: #2D2C2D;
 }
-.main__navigation--item__add-category {
+.main__navigation--sub-item {
+  font-size: 1.4rem;
+  color: grey;
+}
+.main__navigation__add-category {
   margin-top: auto;
   position: relative;
 }
-.main__navigation--item__add-category:hover {
+.main__navigation__add-category:hover {
   cursor: pointer;
   background-color: #1A1B1B;
 }
-.main__navigation--item__add-category__button {
+.main__navigation__add-category__button {
   border: none;
   border-radius: 1rem;
   background-color: inherit;
@@ -179,12 +184,12 @@ body {
   color: white;
   transition: all 0.2s;
 }
-.main__navigation--item__add-category__button:hover {
+.main__navigation__add-category__button:hover {
   cursor: pointer;
   background-color: #2D2C2D;
   transform: rotate(-45deg);
 }
-.main__navigation--item__add-category--form {
+.main__navigation__add-category--form {
   width: 40rem;
   height: 18rem;
   position: absolute;
@@ -201,12 +206,12 @@ body {
   opacity: 1;
   transition: all 0.3s;
 }
-.main__navigation--item__add-category--form__hidden {
+.main__navigation__add-category--form__hidden {
   transform: translateY(-98%);
   visibility: hidden;
   opacity: 0;
 }
-.main__navigation--item__add-category--form::after {
+.main__navigation__add-category--form::after {
   content: "";
   width: 0;
   height: 0;
@@ -217,15 +222,15 @@ body {
   border-right: 1rem solid transparent;
   border-top: 1rem solid #131213;
 }
-.main__navigation--item__add-category--form__input {
+.main__navigation__add-category--form__input {
   border: 1px solid #2D2C2D;
   background-color: #2D2C2D;
 }
-.main__navigation--item__add-category--form__button {
+.main__navigation__add-category--form__button {
   padding: 2%;
   border-radius: 2.5rem;
 }
-.main__navigation--item__add-category--form__button:hover {
+.main__navigation__add-category--form__button:hover {
   cursor: pointer;
 }
 

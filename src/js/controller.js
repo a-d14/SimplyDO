@@ -4,15 +4,36 @@ import listView from './views/ListView.js';
 import sidebarView from './views/sidebarView.js';
 import addItemView from './views/addItemView.js';
 
+import { capitalizeFirstLetter } from './helpers.js';
+
 
 // DISPLAY ITEMS
-const controlItemDisplay = function(day = model.state.selectedDay) {
+const controlItemDisplay = function() {
     listView.render(model.state.items[day].items);
 }
 
 // DISPLAY SIDE-NAV
 const controlSidebarDisplay = function() {
-    sidebarView.render();
+
+    let categories = model.state["categories"].map(cat => {return {...cat}});
+
+    categories.forEach(cat => {
+        cat.name = capitalizeFirstLetter(cat.name);
+        if(cat.parent) {
+            const parent = categories.find(c => c.id == cat.parent);
+            if(parent.children) {
+                parent.children.push(cat);
+            } else {
+                parent.children = [cat];
+            }
+        }
+    });
+
+    categories = categories.filter(cat => cat.parent === null);
+
+    console.log(categories);
+
+    sidebarView.render(categories);
 }
 
 // ADD ITEM TO LIST
@@ -51,7 +72,7 @@ const switchDayController = function(day) {
 }
 
 function init() {
-    controlItemDisplay();
+    // controlItemDisplay();
     controlSidebarDisplay();
     sidebarView.addHandlerDayChange(switchDayController);
     addItemView.addHandlerOnSubmit(addItemController);

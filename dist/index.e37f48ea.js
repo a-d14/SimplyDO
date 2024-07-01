@@ -592,13 +592,31 @@ var _sidebarViewJs = require("./views/sidebarView.js");
 var _sidebarViewJsDefault = parcelHelpers.interopDefault(_sidebarViewJs);
 var _addItemViewJs = require("./views/addItemView.js");
 var _addItemViewJsDefault = parcelHelpers.interopDefault(_addItemViewJs);
+var _helpersJs = require("./helpers.js");
 // DISPLAY ITEMS
-const controlItemDisplay = function(day = _modelJs.state.selectedDay) {
+const controlItemDisplay = function() {
     (0, _listViewJsDefault.default).render(_modelJs.state.items[day].items);
 };
 // DISPLAY SIDE-NAV
 const controlSidebarDisplay = function() {
-    (0, _sidebarViewJsDefault.default).render();
+    let categories = _modelJs.state["categories"].map((cat)=>{
+        return {
+            ...cat
+        };
+    });
+    categories.forEach((cat)=>{
+        cat.name = (0, _helpersJs.capitalizeFirstLetter)(cat.name);
+        if (cat.parent) {
+            const parent = categories.find((c)=>c.id == cat.parent);
+            if (parent.children) parent.children.push(cat);
+            else parent.children = [
+                cat
+            ];
+        }
+    });
+    categories = categories.filter((cat)=>cat.parent === null);
+    console.log(categories);
+    (0, _sidebarViewJsDefault.default).render(categories);
 };
 // ADD ITEM TO LIST
 const addItemController = function(dataObject) {
@@ -623,13 +641,13 @@ const completeItemController = function(id) {
     controlItemDisplay();
 };
 // SWITCH BETWEEN DAYS
-const switchDayController = function(day) {
-    _modelJs.setSelectedDay(day);
+const switchDayController = function(day1) {
+    _modelJs.setSelectedDay(day1);
     controlItemDisplay();
     controlSideNavDisplay();
 };
 function init() {
-    controlItemDisplay();
+    // controlItemDisplay();
     controlSidebarDisplay();
     (0, _sidebarViewJsDefault.default).addHandlerDayChange(switchDayController);
     (0, _addItemViewJsDefault.default).addHandlerOnSubmit(addItemController);
@@ -637,181 +655,275 @@ function init() {
 }
 init();
 
-},{"./model.js":"Y4A21","./views/ListView.js":"bzxVY","./views/sidebarView.js":"eUObu","./views/addItemView.js":"eNQZt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
-const model = {
-    "personal": {
-        "home": [
-            {
-                id: 1,
-                content: "Buy groceries",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 2,
-                content: "Paint the living room wall",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 3,
-                content: "Do the laundry",
-                edit: false,
-                completed: false,
-                date: null
-            },
-            {
-                id: 4,
-                content: "Clean the garage",
-                edit: false,
-                completed: false,
-                date: null
-            }
-        ],
-        "finances": [
-            {
-                id: 5,
-                content: "File taxes",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 6,
-                content: "Sell XYZ stock",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 7,
-                content: "Buy XYZ crypto",
-                edit: false,
-                completed: false,
-                date: null
-            }
-        ],
-        "family": [
-            {
-                id: 8,
-                content: "Dinner with family",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 9,
-                content: "Build the lego set with the kids",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 10,
-                content: "Buy the christmas presents",
-                edit: false,
-                completed: false,
-                date: null
-            }
-        ]
-    },
-    "work": [
+},{"./model.js":"Y4A21","./views/ListView.js":"bzxVY","./views/sidebarView.js":"eUObu","./views/addItemView.js":"eNQZt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./helpers.js":"hGI1E"}],"Y4A21":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
+const state = {
+    "categories": [
+        {
+            id: 1,
+            name: "personal",
+            numberOfItems: 10,
+            parent: null
+        },
+        {
+            id: 2,
+            name: "work",
+            numberOfItems: 3,
+            parent: null
+        },
+        {
+            id: 3,
+            name: "hobbies",
+            numberOfItems: 9,
+            parent: null
+        },
+        {
+            id: 4,
+            name: "home",
+            numberOfItems: 4,
+            parent: 1
+        },
+        {
+            id: 5,
+            name: "finances",
+            numberOfItems: 3,
+            parent: 1
+        },
+        {
+            id: 6,
+            name: "family",
+            numberOfItems: 3,
+            parent: 1
+        },
+        {
+            id: 7,
+            name: "guitar",
+            numberOfItems: 3,
+            parent: 3
+        },
+        {
+            id: 8,
+            name: "painting",
+            numberOfItems: 3,
+            parent: 3
+        },
+        {
+            id: 9,
+            name: "gaming",
+            numberOfItems: 3,
+            parent: 3
+        }
+    ],
+    items: [
+        {
+            id: 1,
+            content: "Buy groceries",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 4
+        },
+        {
+            id: 2,
+            content: "Paint the living room wall",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 4
+        },
+        {
+            id: 3,
+            content: "Do the laundry",
+            edit: false,
+            completed: false,
+            date: null,
+            category: 4
+        },
+        {
+            id: 4,
+            content: "Clean the garage",
+            edit: false,
+            completed: false,
+            date: null,
+            category: 4
+        },
+        {
+            id: 5,
+            content: "File taxes",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 5
+        },
+        {
+            id: 6,
+            content: "Sell XYZ stock",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 5
+        },
+        {
+            id: 7,
+            content: "Buy XYZ crypto",
+            edit: false,
+            completed: false,
+            date: null,
+            category: 5
+        },
+        {
+            id: 8,
+            content: "Dinner with family",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 6
+        },
+        {
+            id: 9,
+            content: "Build the lego set with the kids",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 6
+        },
+        {
+            id: 10,
+            content: "Buy the christmas presents",
+            edit: false,
+            completed: false,
+            date: null,
+            category: 6
+        },
         {
             id: 11,
             content: "Set goals for the quarter with the team",
             edit: false,
             completed: false,
-            date: new Date()
+            date: new Date(),
+            category: 2
         },
         {
             id: 12,
             content: "Decide on appraisals for the high performers",
             edit: false,
             completed: false,
-            date: new Date()
+            date: new Date(),
+            category: 2
         },
         {
             id: 13,
             content: "Organize the yearly office getaway",
             edit: false,
             completed: false,
-            date: null
+            date: null,
+            category: 2
+        },
+        {
+            id: 14,
+            content: "Learn the A minor pentatonic scale",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 7
+        },
+        {
+            id: 15,
+            content: "Learn to read sheet notation",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 7
+        },
+        {
+            id: 16,
+            content: "Learn to play Smells like Teen Spirit",
+            edit: false,
+            completed: false,
+            date: null,
+            category: 7
+        },
+        {
+            id: 17,
+            content: "Learn the basics of brush strokes",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 8
+        },
+        {
+            id: 18,
+            content: "Learn to make urban sketches",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 8
+        },
+        {
+            id: 19,
+            content: "Finish the bob ross follow along painting",
+            edit: false,
+            completed: false,
+            date: null,
+            category: 8
+        },
+        {
+            id: 20,
+            content: "Learn the Jiggle Peek",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 9
+        },
+        {
+            id: 21,
+            content: "Learn how to play Sage",
+            edit: false,
+            completed: false,
+            date: new Date(),
+            category: 9
+        },
+        {
+            id: 22,
+            content: "Reach Platinum 3",
+            edit: false,
+            completed: false,
+            date: null,
+            category: 9
         }
-    ],
-    "hobbies": {
-        "guitar": [
-            {
-                id: 14,
-                content: "Learn the A minor pentatonic scale",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 15,
-                content: "Learn to read sheet notation",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 16,
-                content: "Learn to play Smells like Teen Spirit",
-                edit: false,
-                completed: false,
-                date: null
+    ]
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
             }
-        ],
-        "painting": [
-            {
-                id: 17,
-                content: "Learn the basics of brush strokes",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 18,
-                content: "Learn to make urban sketches",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 19,
-                content: "Finish the bob ross follow along painting",
-                edit: false,
-                completed: false,
-                date: null
-            }
-        ],
-        "gaming": [
-            {
-                id: 20,
-                content: "Learn the Jiggle Peek",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 21,
-                content: "Learn how to play Sage",
-                edit: false,
-                completed: false,
-                date: new Date()
-            },
-            {
-                id: 22,
-                content: "Reach Platinum 3",
-                edit: false,
-                completed: false,
-                date: null
-            }
-        ]
-    },
-    "numItems": 22
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
 };
 
 },{}],"bzxVY":[function(require,module,exports) {
@@ -865,37 +977,7 @@ class View {
 }
 exports.default = View;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"9PReK":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9PReK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
@@ -953,20 +1035,46 @@ parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
 class SidebarView extends (0, _viewJsDefault.default) {
-    _parent = document.querySelector(".select-day__items");
+    _parent = document.querySelector(".main__navigation__list");
+    _svgs = {
+        inbox: `<svg class="icon icon--small icon--inbox w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M5.024 3.783A1 1 0 0 1 6 3h12a1 1 0 0 1 .976.783L20.802 12h-4.244a1.99 1.99 0 0 0-1.824 1.205 2.978 2.978 0 0 1-5.468 0A1.991 1.991 0 0 0 7.442 12H3.198l1.826-8.217ZM3 14v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5h-4.43a4.978 4.978 0 0 1-9.14 0H3Z" clip-rule="evenodd"/>
+                </svg>`,
+        today: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--star" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
+                </svg>`,
+        personal: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--house" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" clip-rule="evenodd"/>
+                    </svg>`,
+        work: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon--small" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 0 0-2 2v4m5-6h8M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m0 0h3a2 2 0 0 1 2 2v4m0 0v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6m18 0s-4 2-9 2-9-2-9-2m9-2h.01"/>
+                </svg>`,
+        hobbies: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--heart" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
+                    </svg>`,
+        other: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--heart" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    </svg>`
+    };
     _generateMarkup() {
-        return [
-            "monday",
-            "tuesday",
-            "wednesday",
-            "thursday",
-            "friday",
-            "saturday",
-            "sunday"
-        ].map((day)=>{
-            if (day === this._data) return `<li class="select-day__item select-day__item--select">${day}</li>`;
-            else return `<li class="select-day__item">${day}</li>`;
-        }).join("");
+        return `
+            <div data-id="-1" class="main__navigation--item">
+                ${this._svgs.inbox}
+                Inbox
+            </div>
+            <div data-id="-2" class="main__navigation--item selected">
+                ${this._svgs.today}
+                Today
+            </div>
+            ${this._data.map((cat)=>`<div data-id=${cat.id} class="main__navigation--item">
+                        ${this._svgs[cat.name.toLowerCase()] ?? ""}
+                        ${cat.name}
+                    </div>
+                    ${cat.children ? cat.children.map((c)=>`<div data-id=${c.id} class="main__navigation--item main__navigation--sub-item">
+                                ${this._svgs[c.name.toLowerCase()] ?? this._svgs.other}
+                            ${c.name}
+                            </div>`).join("") : ""}
+                    `).join("")}
+        `;
     }
     addHandlerDayChange(handler) {
         this._parent.addEventListener("click", (e)=>{
@@ -998,6 +1106,14 @@ class AddItemView extends (0, _viewJsDefault.default) {
 }
 exports.default = new AddItemView();
 
-},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequire4688")
+},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hGI1E":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "capitalizeFirstLetter", ()=>capitalizeFirstLetter);
+const capitalizeFirstLetter = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequire4688")
 
 //# sourceMappingURL=index.e37f48ea.js.map
