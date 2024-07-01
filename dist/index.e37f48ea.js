@@ -590,6 +590,8 @@ var _listViewJs = require("./views/ListView.js");
 var _listViewJsDefault = parcelHelpers.interopDefault(_listViewJs);
 var _sidebarViewJs = require("./views/sidebarView.js");
 var _sidebarViewJsDefault = parcelHelpers.interopDefault(_sidebarViewJs);
+var _addCategoryViewJs = require("./views/addCategoryView.js");
+var _addCategoryViewJsDefault = parcelHelpers.interopDefault(_addCategoryViewJs);
 var _addItemViewJs = require("./views/addItemView.js");
 var _addItemViewJsDefault = parcelHelpers.interopDefault(_addItemViewJs);
 var _helpersJs = require("./helpers.js");
@@ -597,12 +599,20 @@ var _helpersJs = require("./helpers.js");
 const controlItemDisplay = function() {
     (0, _listViewJsDefault.default).render(_modelJs.state.items[day].items);
 };
-// DISPLAY SIDE-NAV
+/** SITE NAVIGATION **/ // DISPLAY
 const controlSidebarDisplay = function() {
     let categories = _modelJs.state["categories"].map((cat)=>{
         return {
             ...cat
         };
+    });
+    categories.push({
+        id: -1,
+        name: "inbox"
+    });
+    categories.push({
+        id: -2,
+        name: "today"
     });
     categories.forEach((cat)=>{
         cat.name = (0, _helpersJs.capitalizeFirstLetter)(cat.name);
@@ -616,7 +626,18 @@ const controlSidebarDisplay = function() {
     });
     categories = categories.filter((cat)=>cat.parent === null);
     console.log(categories);
+    (0, _sidebarViewJsDefault.default).setSelectedId(-2);
     (0, _sidebarViewJsDefault.default).render(categories);
+    (0, _addCategoryViewJsDefault.default).render(_modelJs.state["categories"]);
+};
+// SWITCH TABS
+const switchTab = function(id) {
+    (0, _sidebarViewJsDefault.default).setSelectedId(+id);
+    (0, _sidebarViewJsDefault.default).render();
+};
+// ADD A NEW TAB
+const showForm = function() {
+    (0, _addCategoryViewJsDefault.default).render();
 };
 // ADD ITEM TO LIST
 const addItemController = function(dataObject) {
@@ -640,22 +661,17 @@ const completeItemController = function(id) {
     _modelJs.setItemComplete(id);
     controlItemDisplay();
 };
-// SWITCH BETWEEN DAYS
-const switchDayController = function(day1) {
-    _modelJs.setSelectedDay(day1);
-    controlItemDisplay();
-    controlSideNavDisplay();
-};
 function init() {
     // controlItemDisplay();
     controlSidebarDisplay();
-    (0, _sidebarViewJsDefault.default).addHandlerDayChange(switchDayController);
+    (0, _sidebarViewJsDefault.default).addHandlerCategorySelected(switchTab);
+    (0, _addCategoryViewJsDefault.default).addFormDisplayHander(showForm);
     (0, _addItemViewJsDefault.default).addHandlerOnSubmit(addItemController);
     (0, _listViewJsDefault.default).addHandlerEditAndDeleteItem(editItemController, removeItemController, completeItemController);
 }
 init();
 
-},{"./model.js":"Y4A21","./views/ListView.js":"bzxVY","./views/sidebarView.js":"eUObu","./views/addItemView.js":"eNQZt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./helpers.js":"hGI1E"}],"Y4A21":[function(require,module,exports) {
+},{"./model.js":"Y4A21","./views/ListView.js":"bzxVY","./views/sidebarView.js":"eUObu","./views/addCategoryView.js":"gYdL5","./views/addItemView.js":"eNQZt","./helpers.js":"hGI1E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
@@ -939,18 +955,19 @@ class ListView extends (0, _viewJsDefault.default) {
         super();
     }
     addHandlerEditAndDeleteItem(handlerEdit, handlerDelete, handlerComplete) {
-        this._parent.addEventListener("click", (e)=>{
-            const targetElement = e.target.closest(".list-item").getElementsByTagName("li")[0];
-            const targetId = targetElement.dataset.id;
-            if (e.target.closest("button").className === "list-item__controls--delete") handlerDelete(targetId);
-            else if (e.target.closest("button").className === "list-item__controls--edit" || e.target.closest("button").className === "list-item__controls--submit") {
-                const inputElement = targetElement.getElementsByTagName("input")[0];
-                handlerEdit(+targetId, inputElement ? inputElement.value : null);
-            } else if (e.target.closest("button").className === "list-item__controls--complete") {
-                console.log("complete");
-                handlerComplete(+targetId);
-            }
-        });
+    // this._parent.addEventListener('click', (e) => {
+    //     const targetElement = e.target.closest('.list-item').getElementsByTagName('li')[0];
+    //     const targetId = targetElement.dataset.id;
+    //     if(e.target.closest('button').className === 'list-item__controls--delete') {
+    //         handlerDelete(targetId);
+    //     } else if(e.target.closest('button').className === 'list-item__controls--edit' || e.target.closest('button').className === 'list-item__controls--submit') {
+    //         const inputElement = targetElement.getElementsByTagName('input')[0];
+    //         handlerEdit(+targetId, inputElement ? inputElement.value : null);
+    //     } else if(e.target.closest('button').className === 'list-item__controls--complete') {
+    //         console.log("complete");
+    //         handlerComplete(+targetId);
+    //     }
+    // });
     }
     _generateMarkup() {
         const markup = this._data.map((item)=>(0, _itemViewJsDefault.default).render(item, false)).join("");
@@ -964,8 +981,9 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 class View {
     _data;
-    render(data, render = true) {
+    render(data = this._data, render = true) {
         this._data = data;
+        console.log(this._data);
         const markup = this._generateMarkup();
         if (!render) return markup;
         this.clear();
@@ -1036,6 +1054,7 @@ var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
 class SidebarView extends (0, _viewJsDefault.default) {
     _parent = document.querySelector(".main__navigation__list");
+    _selectedId;
     _svgs = {
         inbox: `<svg class="icon icon--small icon--inbox w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     <path fill-rule="evenodd" d="M5.024 3.783A1 1 0 0 1 6 3h12a1 1 0 0 1 .976.783L20.802 12h-4.244a1.99 1.99 0 0 0-1.824 1.205 2.978 2.978 0 0 1-5.468 0A1.991 1.991 0 0 0 7.442 12H3.198l1.826-8.217ZM3 14v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5h-4.43a4.978 4.978 0 0 1-9.14 0H3Z" clip-rule="evenodd"/>
@@ -1057,56 +1076,89 @@ class SidebarView extends (0, _viewJsDefault.default) {
     };
     _generateMarkup() {
         return `
-            <div data-id="-1" class="main__navigation--item">
+            <div data-id="-1" class="main__navigation--item ${this._selectedId === -1 ? "selected" : ""}">
                 ${this._svgs.inbox}
                 Inbox
             </div>
-            <div data-id="-2" class="main__navigation--item selected">
+            <div data-id="-2" class="main__navigation--item ${this._selectedId === -2 ? "selected" : ""}">
                 ${this._svgs.today}
                 Today
             </div>
-            ${this._data.map((cat)=>`<div data-id=${cat.id} class="main__navigation--item">
-                        ${this._svgs[cat.name.toLowerCase()] ?? ""}
+            ${this._data.map((cat)=>`<div data-id=${cat.id} class="main__navigation--item ${this._selectedId === cat.id ? "selected" : ""}">
+                        ${this._svgs[cat.name.toLowerCase()] ?? this._svgs.other}
                         ${cat.name}
                     </div>
-                    ${cat.children ? cat.children.map((c)=>`<div data-id=${c.id} class="main__navigation--item main__navigation--sub-item">
+                    ${cat.children ? cat.children.map((c)=>`<div data-id=${c.id} class="main__navigation--item main__navigation--sub-item ${this._selectedId === c.id ? "selected" : ""}">
                                 ${this._svgs[c.name.toLowerCase()] ?? this._svgs.other}
                             ${c.name}
                             </div>`).join("") : ""}
                     `).join("")}
         `;
     }
-    addHandlerDayChange(handler) {
+    addHandlerCategorySelected(handler) {
         this._parent.addEventListener("click", (e)=>{
-            console.log(e.target.innerText.trim());
-            const targetDay = e.target.innerText;
-            handler(targetDay);
+            const targetElement = e.target;
+            if (targetElement.classList.contains("main__navigation--item")) handler(targetElement.dataset.id);
         });
+    }
+    setSelectedId(id) {
+        this._selectedId = id;
+    // console.log(this._selectedId);
     }
 }
 exports.default = new SidebarView();
 
-},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eNQZt":[function(require,module,exports) {
+},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gYdL5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _viewJs = require("./View.js");
-var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
-class AddItemView extends (0, _viewJsDefault.default) {
-    _parent = document.querySelector(".add-item");
-    addHandlerOnSubmit(handler) {
-        this._parent.addEventListener("submit", (e)=>{
-            e.preventDefault();
-            console.log(e.target.firstElementChild);
-            const formData = new FormData(e.target);
-            const dataObject = Object.fromEntries(formData.entries());
-            handler(dataObject);
-            e.target.firstElementChild.value = "";
+var _helpers = require("../helpers");
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class AddCategoryView extends (0, _viewDefault.default) {
+    _parent = document.querySelector(".main__navigation__add-category");
+    _displayForm = false;
+    constructor(){
+        super();
+    }
+    _generateMarkup() {
+        return `<form class="main__navigation__add-category--form ${!this._displayForm ? "main__navigation__add-category--form__hidden" : ""}">
+                <p><strong>Add Category</strong></p>
+                <input class="input input__small main__navigation__add-category--form__input" type="text" placeholder="Enter Name" />
+                <select class="input__small dropdown" name="" id="">
+                    <option selected>Select a Category</option>
+                    ${this._data.map((cat)=>`<option>${(0, _helpers.capitalizeFirstLetter)(cat.name)}</option>`)}
+                </select>
+                <button class="main__navigation__add-category--form__button" type="submit">Add</button>
+            </form>
+            <button type="button" class="main__navigation__add-category__button ${this._displayForm ? "clicked" : ""}">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                </svg>                          
+            </button>
+            Add Category
+    `;
+    }
+    handleFormSubmission(event) {
+        // event.preventDefault();
+        console.log("submit");
+    }
+    toggleFormDisplay() {
+        this._displayForm = !this._displayForm;
+        console.log(this._displayForm);
+    }
+    addFormDisplayHander(handler) {
+        this._parent.addEventListener("click", (e)=>{
+            if (e.target.tagName.toLowerCase() === "svg" || e.target.tagName.toLowerCase() === "path" || e.target.classList.contains("main__navigation__add-category__button")) {
+                console.log(e.target);
+                this.toggleFormDisplay();
+                handler();
+            }
         });
     }
 }
-exports.default = new AddItemView();
+exports.default = new AddCategoryView();
 
-},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hGI1E":[function(require,module,exports) {
+},{"../helpers":"hGI1E","./View":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hGI1E":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "capitalizeFirstLetter", ()=>capitalizeFirstLetter);
@@ -1114,6 +1166,26 @@ const capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequire4688")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eNQZt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+class AddItemView extends (0, _viewJsDefault.default) {
+    _parent = document.querySelector(".add-item");
+    addHandlerOnSubmit(handler) {
+    // this._parent.addEventListener('submit', (e) => {
+    //     e.preventDefault();
+    //     console.log(e.target.firstElementChild);
+    //     const formData = new FormData(e.target);
+    //     const dataObject = Object.fromEntries(formData.entries());
+    //     handler(dataObject);
+    //     e.target.firstElementChild.value = "";
+    // });
+    }
+}
+exports.default = new AddItemView();
+
+},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequire4688")
 
 //# sourceMappingURL=index.e37f48ea.js.map

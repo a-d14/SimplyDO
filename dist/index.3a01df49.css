@@ -182,7 +182,7 @@ body {
 
 .main__navigation--sub-item {
   color: gray;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
 
 .main__navigation__add-category {
@@ -211,6 +211,9 @@ body {
 .main__navigation__add-category__button:hover {
   cursor: pointer;
   background-color: #2d2c2d;
+}
+
+.main__navigation__add-category__button.clicked {
   transform: rotate(-45deg);
 }
 

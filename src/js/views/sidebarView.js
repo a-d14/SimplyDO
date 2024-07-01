@@ -3,6 +3,8 @@ import View from "./View.js";
 class SidebarView extends View {
   _parent = document.querySelector(".main__navigation__list");
 
+  _selectedId;
+
   _svgs = {
     inbox: `<svg class="icon icon--small icon--inbox w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     <path fill-rule="evenodd" d="M5.024 3.783A1 1 0 0 1 6 3h12a1 1 0 0 1 .976.783L20.802 12h-4.244a1.99 1.99 0 0 0-1.824 1.205 2.978 2.978 0 0 1-5.468 0A1.991 1.991 0 0 0 7.442 12H3.198l1.826-8.217ZM3 14v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5h-4.43a4.978 4.978 0 0 1-9.14 0H3Z" clip-rule="evenodd"/>
@@ -24,41 +26,57 @@ class SidebarView extends View {
   };
 
   _generateMarkup() {
-        return `
-            <div data-id="-1" class="main__navigation--item">
+    return `
+            <div data-id="-1" class="main__navigation--item ${this._selectedId === -1 ? 'selected' : ''}">
                 ${this._svgs.inbox}
                 Inbox
             </div>
-            <div data-id="-2" class="main__navigation--item selected">
+            <div data-id="-2" class="main__navigation--item ${this._selectedId === -2 ? 'selected' : ''}">
                 ${this._svgs.today}
                 Today
             </div>
-            ${
-                this._data.map(cat => (
-                    `<div data-id=${cat.id} class="main__navigation--item">
-                        ${this._svgs[cat.name.toLowerCase()] ?? ''}
+            ${this._data
+              .map(
+                (cat) =>
+                  `<div data-id=${cat.id} class="main__navigation--item ${this._selectedId === cat.id ? 'selected' : ''}">
+                        ${this._svgs[cat.name.toLowerCase()] ?? this._svgs.other}
                         ${cat.name}
                     </div>
-                    ${cat.children ? 
-                        cat.children.map(c => (
-                            `<div data-id=${c.id} class="main__navigation--item main__navigation--sub-item">
-                                ${this._svgs[c.name.toLowerCase()] ?? this._svgs.other}
+                    ${
+                      cat.children
+                        ? cat.children
+                            .map(
+                              (c) =>
+                                `<div data-id=${
+                                  c.id
+                                } class="main__navigation--item main__navigation--sub-item ${this._selectedId === c.id ? 'selected' : ''}">
+                                ${
+                                  this._svgs[c.name.toLowerCase()] ??
+                                  this._svgs.other
+                                }
                             ${c.name}
                             </div>`
-                        )).join('') : ''
+                            )
+                            .join("")
+                        : ""
                     }
                     `
-                )).join('')
-            }
+              )
+              .join("")}
         `;
-    }
+  }
 
-  addHandlerDayChange(handler) {
+  addHandlerCategorySelected(handler) {
     this._parent.addEventListener("click", (e) => {
-      console.log(e.target.innerText.trim());
-      const targetDay = e.target.innerText;
-      handler(targetDay);
+      const targetElement = e.target;
+      if(targetElement.classList.contains('main__navigation--item'))
+        handler(targetElement.dataset.id);
     });
+  }
+
+  setSelectedId(id) {
+    this._selectedId = id;
+    // console.log(this._selectedId);
   }
 }
 

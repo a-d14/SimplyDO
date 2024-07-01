@@ -1,8 +1,9 @@
 export default class View {
     _data;
 
-    render(data, render = true) {
+    render(data = this._data, render = true) {
         this._data = data;
+        console.log(this._data);
         const markup = this._generateMarkup();
 
         if(!render) return markup;

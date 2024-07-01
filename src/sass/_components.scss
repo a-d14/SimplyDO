@@ -40,8 +40,10 @@
         transition: all 0.2s;
 
         &:hover {
+
             cursor: pointer;
             background-color: #2D2C2D;
+
         }
 
         // &:visited, &:active {
@@ -51,7 +53,7 @@
     }
 
     &--sub-item {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         color: grey;
     }
 
@@ -78,11 +80,14 @@
 
             color: white;
 
-            transition: all .2s;
+            transition: all 0.2s;
             
             &:hover {
                 cursor: pointer;
                 background-color: #2D2C2D;
+            }
+
+            &.clicked {
                 transform: rotate(-45deg);
             }
 

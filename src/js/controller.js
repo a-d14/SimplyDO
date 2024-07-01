@@ -2,6 +2,7 @@ import * as model from './model.js';
 
 import listView from './views/ListView.js';
 import sidebarView from './views/sidebarView.js';
+import addCategoryView from './views/addCategoryView.js';
 import addItemView from './views/addItemView.js';
 
 import { capitalizeFirstLetter } from './helpers.js';
@@ -12,10 +13,14 @@ const controlItemDisplay = function() {
     listView.render(model.state.items[day].items);
 }
 
-// DISPLAY SIDE-NAV
+/** SITE NAVIGATION **/
+
+// DISPLAY
 const controlSidebarDisplay = function() {
 
     let categories = model.state["categories"].map(cat => {return {...cat}});
+    categories.push({id: -1, name: "inbox"});
+    categories.push({id: -2, name: "today"});
 
     categories.forEach(cat => {
         cat.name = capitalizeFirstLetter(cat.name);
@@ -33,7 +38,20 @@ const controlSidebarDisplay = function() {
 
     console.log(categories);
 
+    sidebarView.setSelectedId(-2);
     sidebarView.render(categories);
+    addCategoryView.render(model.state["categories"]);
+}
+
+// SWITCH TABS
+const switchTab = function(id) {
+    sidebarView.setSelectedId(+id);
+    sidebarView.render();
+}
+
+// ADD A NEW TAB
+const showForm = function() {
+    addCategoryView.render();
 }
 
 // ADD ITEM TO LIST
@@ -64,17 +82,11 @@ const completeItemController = function(id) {
     controlItemDisplay();
 }
 
-// SWITCH BETWEEN DAYS
-const switchDayController = function(day) {
-    model.setSelectedDay(day);
-    controlItemDisplay();
-    controlSideNavDisplay();
-}
-
 function init() {
     // controlItemDisplay();
     controlSidebarDisplay();
-    sidebarView.addHandlerDayChange(switchDayController);
+    sidebarView.addHandlerCategorySelected(switchTab);
+    addCategoryView.addFormDisplayHander(showForm);
     addItemView.addHandlerOnSubmit(addItemController);
     listView.addHandlerEditAndDeleteItem(editItemController, removeItemController, completeItemController);
 }
