@@ -40,7 +40,6 @@ const controlSidebarDisplay = function() {
 
     sidebarView.setSelectedId(-2);
     sidebarView.render(categories);
-    addCategoryView.render(model.state["categories"]);
 }
 
 // SWITCH TABS
@@ -50,11 +49,11 @@ const switchTab = function(id) {
 }
 
 // ADD A NEW TAB
-const showForm = function() {
-    addCategoryView.render();
+const addCategoryController = function() {
+    console.log('submit');
 }
 
-// ADD ITEM TO LIST
+/** ADD ITEMS **/
 const addItemController = function(dataObject) {
 
     if(dataObject.itemEntry.trim() === '') return;
@@ -83,12 +82,16 @@ const completeItemController = function(id) {
 }
 
 function init() {
-    // controlItemDisplay();
+
+    // RENDERING ELEMENTS
     controlSidebarDisplay();
+    addCategoryView.render(model.state["categories"]);
+    addItemView.render();
+
+    // HANDLING DOM EVENTS
     sidebarView.addHandlerCategorySelected(switchTab);
-    addCategoryView.addFormDisplayHander(showForm);
-    addItemView.addHandlerOnSubmit(addItemController);
-    listView.addHandlerEditAndDeleteItem(editItemController, removeItemController, completeItemController);
+    addCategoryView.addFormSubmitHandler(addCategoryController);
+
 }
 
 init();

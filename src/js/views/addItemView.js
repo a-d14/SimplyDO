@@ -2,7 +2,33 @@ import View from "./View.js";
 
 class AddItemView extends View {
     
-    _parent = document.querySelector('.add-item');
+    _parent = document.querySelector('.main__list--add-item');
+
+    _generateMarkup() {
+        return `<input class="main__list--add-item-input input input__large" placeholder="Enter a task here..." name="itemEntry" type="text" id="item-entry" />
+            <div class="main__list--add-item__controls">
+                <input class="main__list--add-item-button" type="date" />
+                <!-- <input class="main__list--add-item-button" type="datetime-local" /> -->
+                <input class="main__list--add-item-button" type="time" />
+                <button class="main__list--add-item-button">
+                    Category
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white icon--medium" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                    </svg>  
+                </button>
+                <button class="main__list--add-item-button">
+                    Priority
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white icon--medium" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                    </svg>  
+                </button>
+                <button type="submit" class="main__list--add-item-button main__list--add-item-button-add">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--medium icon--plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                    </svg> 
+                </button>
+        </div>`;
+    }
 
     addHandlerOnSubmit(handler) {
         // this._parent.addEventListener('submit', (e) => {

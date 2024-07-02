@@ -628,7 +628,6 @@ const controlSidebarDisplay = function() {
     console.log(categories);
     (0, _sidebarViewJsDefault.default).setSelectedId(-2);
     (0, _sidebarViewJsDefault.default).render(categories);
-    (0, _addCategoryViewJsDefault.default).render(_modelJs.state["categories"]);
 };
 // SWITCH TABS
 const switchTab = function(id) {
@@ -636,11 +635,10 @@ const switchTab = function(id) {
     (0, _sidebarViewJsDefault.default).render();
 };
 // ADD A NEW TAB
-const showForm = function() {
-    (0, _addCategoryViewJsDefault.default).render();
+const addCategoryController = function() {
+    console.log("submit");
 };
-// ADD ITEM TO LIST
-const addItemController = function(dataObject) {
+/** ADD ITEMS **/ const addItemController = function(dataObject) {
     if (dataObject.itemEntry.trim() === "") return;
     // console.log(dataObject);
     _modelJs.addItem(dataObject);
@@ -662,12 +660,13 @@ const completeItemController = function(id) {
     controlItemDisplay();
 };
 function init() {
-    // controlItemDisplay();
+    // RENDERING ELEMENTS
     controlSidebarDisplay();
+    (0, _addCategoryViewJsDefault.default).render(_modelJs.state["categories"]);
+    (0, _addItemViewJsDefault.default).render();
+    // HANDLING DOM EVENTS
     (0, _sidebarViewJsDefault.default).addHandlerCategorySelected(switchTab);
-    (0, _addCategoryViewJsDefault.default).addFormDisplayHander(showForm);
-    (0, _addItemViewJsDefault.default).addHandlerOnSubmit(addItemController);
-    (0, _listViewJsDefault.default).addHandlerEditAndDeleteItem(editItemController, removeItemController, completeItemController);
+    (0, _addCategoryViewJsDefault.default).addFormSubmitHandler(addCategoryController);
 }
 init();
 
@@ -1116,12 +1115,18 @@ var _view = require("./View");
 var _viewDefault = parcelHelpers.interopDefault(_view);
 class AddCategoryView extends (0, _viewDefault.default) {
     _parent = document.querySelector(".main__navigation__add-category");
-    _displayForm = false;
     constructor(){
         super();
+        this._parent.addEventListener("click", (e)=>{
+            const targetElement = e.target.closest(".main__navigation__add-category__button");
+            if (targetElement) {
+                targetElement.classList.toggle("clicked");
+                targetElement.previousElementSibling.classList.toggle("main__navigation__add-category--form__hidden");
+            }
+        });
     }
     _generateMarkup() {
-        return `<form class="main__navigation__add-category--form ${!this._displayForm ? "main__navigation__add-category--form__hidden" : ""}">
+        return `<form class="main__navigation__add-category--form main__navigation__add-category--form__hidden">
                 <p><strong>Add Category</strong></p>
                 <input class="input input__small main__navigation__add-category--form__input" type="text" placeholder="Enter Name" />
                 <select class="input__small dropdown" name="" id="">
@@ -1130,7 +1135,7 @@ class AddCategoryView extends (0, _viewDefault.default) {
                 </select>
                 <button class="main__navigation__add-category--form__button" type="submit">Add</button>
             </form>
-            <button type="button" class="main__navigation__add-category__button ${this._displayForm ? "clicked" : ""}">
+            <button type="button" class="main__navigation__add-category__button">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
                 </svg>                          
@@ -1138,21 +1143,10 @@ class AddCategoryView extends (0, _viewDefault.default) {
             Add Category
     `;
     }
-    handleFormSubmission(event) {
-        // event.preventDefault();
-        console.log("submit");
-    }
-    toggleFormDisplay() {
-        this._displayForm = !this._displayForm;
-        console.log(this._displayForm);
-    }
-    addFormDisplayHander(handler) {
-        this._parent.addEventListener("click", (e)=>{
-            if (e.target.tagName.toLowerCase() === "svg" || e.target.tagName.toLowerCase() === "path" || e.target.classList.contains("main__navigation__add-category__button")) {
-                console.log(e.target);
-                this.toggleFormDisplay();
-                handler();
-            }
+    addFormSubmitHandler(handler) {
+        this._parent.addEventListener("submit", (e)=>{
+            e.preventDefault();
+            handler();
         });
     }
 }
@@ -1172,7 +1166,32 @@ parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
 class AddItemView extends (0, _viewJsDefault.default) {
-    _parent = document.querySelector(".add-item");
+    _parent = document.querySelector(".main__list--add-item");
+    _generateMarkup() {
+        return `<input class="main__list--add-item-input input input__large" placeholder="Enter a task here..." name="itemEntry" type="text" id="item-entry" />
+            <div class="main__list--add-item__controls">
+                <input class="main__list--add-item-button" type="date" />
+                <!-- <input class="main__list--add-item-button" type="datetime-local" /> -->
+                <input class="main__list--add-item-button" type="time" />
+                <button class="main__list--add-item-button">
+                    Category
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white icon--medium" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                    </svg>  
+                </button>
+                <button class="main__list--add-item-button">
+                    Priority
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white icon--medium" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                    </svg>  
+                </button>
+                <button type="submit" class="main__list--add-item-button main__list--add-item-button-add">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--medium icon--plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                    </svg> 
+                </button>
+        </div>`;
+    }
     addHandlerOnSubmit(handler) {
     // this._parent.addEventListener('submit', (e) => {
     //     e.preventDefault();
