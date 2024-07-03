@@ -1082,6 +1082,9 @@ class SidebarView extends (0, _viewJsDefault.default) {
         hobbies: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--heart" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
                     </svg>`,
+        custom: `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>`,
         none: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--heart" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     </svg>`
     };
@@ -1096,7 +1099,7 @@ class SidebarView extends (0, _viewJsDefault.default) {
                 Today
             </div>
             ${this._data.map((cat)=>`<div data-id=${cat.id} class="main__navigation--item ${this._selectedId === cat.id ? "selected" : ""}">
-                        ${this._svgs[cat.name.toLowerCase()] ?? this._svgs.none}
+                        ${this._svgs[cat.name.toLowerCase()] ?? this._svgs.custom}
                         ${cat.name}
                     </div>
                     ${cat.children ? cat.children.map((c)=>`<div data-id=${c.id} class="main__navigation--item main__navigation--sub-item ${this._selectedId === c.id ? "selected" : ""}">
