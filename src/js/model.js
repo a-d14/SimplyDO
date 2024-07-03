@@ -37,3 +37,11 @@ export const state = {
         { id: 22, content: "Reach Platinum 3", edit: false, completed: false, date: null, category: 9 }
     ]
 }
+
+state["categories"].push = function() {
+    for(let arg of arguments) {
+        arg = {...arg, id: state["categories"].length + 1, numberOfItems: 0};
+    }
+
+    return Array.prototype.push.apply(this, arguments);
+}

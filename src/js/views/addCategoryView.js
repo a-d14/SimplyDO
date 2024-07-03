@@ -8,23 +8,24 @@ class AddCategoryView extends View {
     constructor() {
         super();
         this._parent.addEventListener('click', (e) => {
-            const targetElement = e.target.closest('.main__navigation__add-category__button');
-            if(targetElement) {
-                targetElement.classList.toggle('clicked');
-                targetElement.previousElementSibling.classList.toggle('main__navigation__add-category--form__hidden');
+            const closeForm = e.target.closest('.main__navigation__add-category__button') || e.target.closest('.main__navigation__add-category--form__button');
+            if(closeForm) {
+                document.querySelector('.main__navigation__add-category__button').classList.toggle('clicked');
+                document.querySelector('.main__navigation__add-category--form').classList.toggle('main__navigation__add-category--form__hidden');
             }
         });
     }
 
-  _generateMarkup() {
+  _generateMarkup(error = null) {
     return `<form class="main__navigation__add-category--form main__navigation__add-category--form__hidden">
                 <p><strong>Add Category</strong></p>
-                <input class="input input__small main__navigation__add-category--form__input" type="text" placeholder="Enter Name" />
-                <select class="input__small dropdown" name="" id="">
-                    <option selected>Select a Category</option>
+                <input name="category-name" class="input input__small main__navigation__add-category--form__input" type="text" placeholder="Enter Name" />
+                ${error ? `<small>${error}</small>` : ''}
+                <select name="parent-category" class="input__small dropdown">
+                    <option value=default selected>Select a Category</option>
                     ${
                         this._data.map((cat) => (
-                            `<option>${capitalizeFirstLetter(cat.name)}</option>`
+                            `<option value=${cat.id}>${capitalizeFirstLetter(cat.name)}</option>`
                         ))
                     }
                 </select>
@@ -42,8 +43,7 @@ class AddCategoryView extends View {
 
   addFormSubmitHandler(handler) {
     this._parent.addEventListener("submit", (e) => {
-        e.preventDefault();
-        handler();
+        handler(e);
     })
   }
 

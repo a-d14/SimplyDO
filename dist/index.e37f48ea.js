@@ -606,14 +606,8 @@ const controlSidebarDisplay = function() {
             ...cat
         };
     });
-    categories.push({
-        id: -1,
-        name: "inbox"
-    });
-    categories.push({
-        id: -2,
-        name: "today"
-    });
+    // categories.push({id: -1, name: "inbox"});
+    // categories.push({id: -2, name: "today"});
     categories.forEach((cat)=>{
         cat.name = (0, _helpersJs.capitalizeFirstLetter)(cat.name);
         if (cat.parent) {
@@ -624,7 +618,7 @@ const controlSidebarDisplay = function() {
             ];
         }
     });
-    categories = categories.filter((cat)=>cat.parent === null);
+    categories = categories.filter((cat)=>!cat.parent || cat.children);
     console.log(categories);
     (0, _sidebarViewJsDefault.default).setSelectedId(-2);
     (0, _sidebarViewJsDefault.default).render(categories);
@@ -635,8 +629,18 @@ const switchTab = function(id) {
     (0, _sidebarViewJsDefault.default).render();
 };
 // ADD A NEW TAB
-const addCategoryController = function() {
+const addCategoryController = function(event) {
+    event.preventDefault();
     console.log("submit");
+    const data = new FormData(event.target);
+    const dataObject = Object.fromEntries(data.entries());
+    console.log(dataObject);
+    const newCategory = {
+        name: dataObject["category-name"],
+        parent: dataObject["parent-category"] === "default" ? null : dataObject["parent-category"]
+    };
+    _modelJs.state["categories"].push(newCategory);
+    controlSidebarDisplay();
 };
 /** ADD ITEMS **/ const addItemController = function(dataObject) {
     if (dataObject.itemEntry.trim() === "") return;
@@ -662,7 +666,7 @@ const completeItemController = function(id) {
 function init() {
     // RENDERING ELEMENTS
     controlSidebarDisplay();
-    (0, _addCategoryViewJsDefault.default).render(_modelJs.state["categories"]);
+    (0, _addCategoryViewJsDefault.default).render(_modelJs.state["categories"].filter((cat)=>!cat.parent));
     (0, _addItemViewJsDefault.default).render();
     // HANDLING DOM EVENTS
     (0, _sidebarViewJsDefault.default).addHandlerCategorySelected(switchTab);
@@ -910,6 +914,14 @@ const state = {
         }
     ]
 };
+state["categories"].push = function() {
+    for (let arg of arguments)arg = {
+        ...arg,
+        id: state["categories"].length + 1,
+        numberOfItems: 0
+    };
+    return Array.prototype.push.apply(this, arguments);
+};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -1070,7 +1082,7 @@ class SidebarView extends (0, _viewJsDefault.default) {
         hobbies: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--heart" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
                     </svg>`,
-        other: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--heart" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        none: `<svg class="w-6 h-6 text-gray-800 dark:text-white icon icon--small icon--heart" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                     </svg>`
     };
     _generateMarkup() {
@@ -1084,11 +1096,11 @@ class SidebarView extends (0, _viewJsDefault.default) {
                 Today
             </div>
             ${this._data.map((cat)=>`<div data-id=${cat.id} class="main__navigation--item ${this._selectedId === cat.id ? "selected" : ""}">
-                        ${this._svgs[cat.name.toLowerCase()] ?? this._svgs.other}
+                        ${this._svgs[cat.name.toLowerCase()] ?? this._svgs.none}
                         ${cat.name}
                     </div>
                     ${cat.children ? cat.children.map((c)=>`<div data-id=${c.id} class="main__navigation--item main__navigation--sub-item ${this._selectedId === c.id ? "selected" : ""}">
-                                ${this._svgs[c.name.toLowerCase()] ?? this._svgs.other}
+                                ${this._svgs[c.name.toLowerCase()] ?? this._svgs.none}
                             ${c.name}
                             </div>`).join("") : ""}
                     `).join("")}
@@ -1118,20 +1130,21 @@ class AddCategoryView extends (0, _viewDefault.default) {
     constructor(){
         super();
         this._parent.addEventListener("click", (e)=>{
-            const targetElement = e.target.closest(".main__navigation__add-category__button");
-            if (targetElement) {
-                targetElement.classList.toggle("clicked");
-                targetElement.previousElementSibling.classList.toggle("main__navigation__add-category--form__hidden");
+            const closeForm = e.target.closest(".main__navigation__add-category__button") || e.target.closest(".main__navigation__add-category--form__button");
+            if (closeForm) {
+                document.querySelector(".main__navigation__add-category__button").classList.toggle("clicked");
+                document.querySelector(".main__navigation__add-category--form").classList.toggle("main__navigation__add-category--form__hidden");
             }
         });
     }
-    _generateMarkup() {
+    _generateMarkup(error = null) {
         return `<form class="main__navigation__add-category--form main__navigation__add-category--form__hidden">
                 <p><strong>Add Category</strong></p>
-                <input class="input input__small main__navigation__add-category--form__input" type="text" placeholder="Enter Name" />
-                <select class="input__small dropdown" name="" id="">
-                    <option selected>Select a Category</option>
-                    ${this._data.map((cat)=>`<option>${(0, _helpers.capitalizeFirstLetter)(cat.name)}</option>`)}
+                <input name="category-name" class="input input__small main__navigation__add-category--form__input" type="text" placeholder="Enter Name" />
+                ${error ? `<small>${error}</small>` : ""}
+                <select name="parent-category" class="input__small dropdown">
+                    <option value=default selected>Select a Category</option>
+                    ${this._data.map((cat)=>`<option value=${cat.id}>${(0, _helpers.capitalizeFirstLetter)(cat.name)}</option>`)}
                 </select>
                 <button class="main__navigation__add-category--form__button" type="submit">Add</button>
             </form>
@@ -1145,8 +1158,7 @@ class AddCategoryView extends (0, _viewDefault.default) {
     }
     addFormSubmitHandler(handler) {
         this._parent.addEventListener("submit", (e)=>{
-            e.preventDefault();
-            handler();
+            handler(e);
         });
     }
 }

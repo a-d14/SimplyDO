@@ -19,8 +19,8 @@ const controlItemDisplay = function() {
 const controlSidebarDisplay = function() {
 
     let categories = model.state["categories"].map(cat => {return {...cat}});
-    categories.push({id: -1, name: "inbox"});
-    categories.push({id: -2, name: "today"});
+    // categories.push({id: -1, name: "inbox"});
+    // categories.push({id: -2, name: "today"});
 
     categories.forEach(cat => {
         cat.name = capitalizeFirstLetter(cat.name);
@@ -34,7 +34,7 @@ const controlSidebarDisplay = function() {
         }
     });
 
-    categories = categories.filter(cat => cat.parent === null);
+    categories = categories.filter(cat => !cat.parent || cat.children);
 
     console.log(categories);
 
@@ -49,8 +49,16 @@ const switchTab = function(id) {
 }
 
 // ADD A NEW TAB
-const addCategoryController = function() {
+const addCategoryController = function(event) {
+    event.preventDefault();
     console.log('submit');
+    const data = new FormData(event.target);
+    const dataObject = Object.fromEntries(data.entries());
+    console.log(dataObject);
+    const newCategory = {name: dataObject["category-name"], parent: dataObject["parent-category"] === "default" ? null : dataObject["parent-category"]};
+    model.state["categories"].push(newCategory);
+
+	controlSidebarDisplay();
 }
 
 /** ADD ITEMS **/
@@ -85,7 +93,7 @@ function init() {
 
     // RENDERING ELEMENTS
     controlSidebarDisplay();
-    addCategoryView.render(model.state["categories"]);
+    addCategoryView.render(model.state["categories"].filter((cat) => !cat.parent));
     addItemView.render();
 
     // HANDLING DOM EVENTS
